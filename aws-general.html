@@ -1,0 +1,2671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-17 Wed 11:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aws General</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="edward" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Aws General</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4ce4dcc">1. AWS Accounts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="account">account</span></span></a>
+<ul>
+<li><a href="#orga019d48">1.1. Account Creation / best practices&#xa0;&#xa0;&#xa0;<span class="tag"><span class="creation">creation</span></span></a></li>
+<li><a href="#orgc50af94">1.2. MFA :: Multi Factor Authentication&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mfa">mfa</span></span></a></li>
+<li><a href="#orgdb6ff38">1.3. IAM :: Identity and Access Management&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iam">iam</span></span></a>
+<ul>
+<li><a href="#org2a6e440">1.3.1. Create other <code>identities</code> inside the root account&#xa0;&#xa0;&#xa0;<span class="tag"><span class="identity">identity</span></span></a></li>
+<li><a href="#org936dbd4">1.3.2. Principals&#xa0;&#xa0;&#xa0;<span class="tag"><span class="principal">principal</span></span></a></li>
+<li><a href="#orgb79ebd8">1.3.3. IDP&#xa0;&#xa0;&#xa0;<span class="tag"><span class="idp">idp</span></span></a></li>
+<li><a href="#orgc0bc007">1.3.4. Authentication&#xa0;&#xa0;&#xa0;<span class="tag"><span class="authentication">authentication</span></span></a></li>
+<li><a href="#org7bd10e7">1.3.5. Auhtorization&#xa0;&#xa0;&#xa0;<span class="tag"><span class="authorization">authorization</span></span></a></li>
+<li><a href="#org02d2112">1.3.6. Identity Federation&#xa0;&#xa0;&#xa0;<span class="tag"><span class="federation">federation</span></span></a></li>
+<li><a href="#orgb494a26">1.3.7. Exam Notes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+<li><a href="#org4211019">1.3.8. IAM Access Keys&#xa0;&#xa0;&#xa0;<span class="tag"><span class="keys">keys</span></span></a></li>
+<li><a href="#org06227cf">1.3.9. Policies&#xa0;&#xa0;&#xa0;<span class="tag"><span class="policy">policy</span></span></a></li>
+<li><a href="#orgbb56229">1.3.10. Policy Document&#xa0;&#xa0;&#xa0;<span class="tag"><span class="document">document</span></span></a></li>
+<li><a href="#org18c0740">1.3.11. Example Document&#xa0;&#xa0;&#xa0;<span class="tag"><span class="example">example</span>&#xa0;<span class="exam_tip">exam_tip</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org1330877">1.4. Root User&#xa0;&#xa0;&#xa0;<span class="tag"><span class="root">root</span>&#xa0;<span class="user">user</span></span></a></li>
+<li><a href="#orgec6bdd8">1.5. AWS Organizations&#xa0;&#xa0;&#xa0;<span class="tag"><span class="organizations">organizations</span></span></a>
+<ul>
+<li><a href="#orga0ea245">1.5.1. Example</a></li>
+<li><a href="#orgde024a0">1.5.2. Organziations Allow</a></li>
+<li><a href="#orgaa85ac3">1.5.3. Service Control Policies&#xa0;&#xa0;&#xa0;<span class="tag"><span class="scp">scp</span>&#xa0;<span class="service_control_policy">service_control_policy</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4dc9fa7">2. Lambda&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lambda">lambda</span></span></a></li>
+<li><a href="#org7c50b49">3. aws-cli&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span>&#xa0;<span class="aws">aws</span></span></a></li>
+<li><a href="#org79ad562">4. Cloud Computing&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="cloud">cloud</span></span></a>
+<ul>
+<li><a href="#org03003c7">4.1. Defined by NIST&#xa0;&#xa0;&#xa0;<span class="tag"><span class="nist">nist</span></span></a>
+<ul>
+<li><a href="#org0020149">4.1.1. on demand self service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="self_service">self_service</span></span></a></li>
+<li><a href="#org1242c98">4.1.2. broad network access&#xa0;&#xa0;&#xa0;<span class="tag"><span class="net_access">net_access</span></span></a></li>
+<li><a href="#org63b4c02">4.1.3. resource pooling&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resource_pooling">resource_pooling</span></span></a></li>
+<li><a href="#org0db77ce">4.1.4. rapid elasticity&#xa0;&#xa0;&#xa0;<span class="tag"><span class="elastic">elastic</span>&#xa0;<span class="rapid">rapid</span></span></a></li>
+<li><a href="#orga310438">4.1.5. measured service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="measured_service">measured_service</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org3159e92">4.2. Multicloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="multicloud">multicloud</span></span></a>
+<ul>
+<li><a href="#org5e0d0af">4.2.1. &ldquo;Singplepane&rdquo;&#xa0;&#xa0;&#xa0;<span class="tag"><span class="singlepane">singlepane</span></span></a></li>
+<li><a href="#org4e44d0f">4.2.2. private cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="private">private</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org20e25a5">4.3. Hybridcloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="hybridcloud">hybridcloud</span></span></a>
+<ul>
+<li><a href="#orgf12ebed">4.3.1. <code>NOT</code> the same as cloud and on-prem, that is a <code>HYBRID ENV</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org1d267da">4.4. private cloud</a></li>
+<li><a href="#orgffe9b55">4.5. public cloud</a></li>
+<li><a href="#orgad556d9">4.6. Cloud Service Models&#xa0;&#xa0;&#xa0;<span class="tag"><span class="as_a_service">as_a_service</span>&#xa0;<span class="service">service</span></span></a>
+<ul>
+<li><a href="#orgc4827cc">4.6.1. unit of consumption</a></li>
+<li><a href="#org6d88959">4.6.2. Infrastructure as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iaas">iaas</span></span></a></li>
+<li><a href="#orgccc8d6b">4.6.3. Platform as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="paas">paas</span></span></a></li>
+<li><a href="#orgad60f20">4.6.4. Software as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="saas">saas</span></span></a></li>
+<li><a href="#org3dee431">4.6.5. Not Cloud</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5d95b4c">5. AWS Infrastructure&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="infrastructure">infrastructure</span></span></a>
+<ul>
+<li><a href="#org12e4c6a">5.1. References&#xa0;&#xa0;&#xa0;<span class="tag"><span class="refernces">refernces</span></span></a></li>
+<li><a href="#orgc2ed552">5.2. AWS Regions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="region">region</span></span></a>
+<ul>
+<li><a href="#orgfd0b702">5.2.1. Benefits of regions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></a></li>
+<li><a href="#org441587c">5.2.2. Naming Convention</a></li>
+</ul>
+</li>
+<li><a href="#org3b23e7f">5.3. AWS Edge Location&#xa0;&#xa0;&#xa0;<span class="tag"><span class="edge_location">edge_location</span></span></a>
+<ul>
+<li><a href="#org61992ba">5.3.1. CDN-esque, far more widespread, store data closer to customers. Content Distribution Services&#xa0;&#xa0;&#xa0;<span class="tag"><span class="CDS">CDS</span>&#xa0;<span class="CDN">CDN</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org266ab07">5.4. AWS Availability Zones&#xa0;&#xa0;&#xa0;<span class="tag"><span class="availability_zone">availability_zone</span></span></a></li>
+<li><a href="#org46958af">5.5. Service Resilience&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resilience">resilience</span></span></a></li>
+<li><a href="#org4a9a745">5.6. AWS Resource Name&#xa0;&#xa0;&#xa0;<span class="tag"><span class="arn">arn</span></span></a>
+<ul>
+<li><a href="#org303ddbc">5.6.1. Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></a></li>
+<li><a href="#org6a8d42b">5.6.2. exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb3618bd">6. Virtual Private Cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="vpc">vpc</span></span></a>
+<ul>
+<li><a href="#org62b23ae">6.1. default VPC</a>
+<ul>
+<li><a href="#org8ff6f10">6.1.1. Network</a></li>
+</ul>
+</li>
+<li><a href="#orgab28be5">6.2. custom VPC</a></li>
+<li><a href="#org8e6e1dc">6.3. Internet Gateway&#xa0;&#xa0;&#xa0;<span class="tag"><span class="igw">igw</span></span></a></li>
+<li><a href="#org6c6d942">6.4. Security Group&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sg">sg</span></span></a></li>
+<li><a href="#org63d2080">6.5. NACL&#xa0;&#xa0;&#xa0;<span class="tag"><span class="nacl">nacl</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org37a0304">7. Elastic Compute Cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ec2">ec2</span></span></a>
+<ul>
+<li><a href="#org07b01d1">7.1. Instance Lifecycle&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lifecycle">lifecycle</span>&#xa0;<span class="control">control</span></span></a>
+<ul>
+<li><a href="#org20c65d0">7.1.1. running</a></li>
+<li><a href="#orgbbfc4eb">7.1.2. pending</a></li>
+<li><a href="#orgfdd9ca0">7.1.3. stopped</a></li>
+<li><a href="#orgb171fe6">7.1.4. terminated</a></li>
+</ul>
+</li>
+<li><a href="#org9e31089">7.2. Amazon Machine Image&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ami">ami</span></span></a>
+<ul>
+<li><a href="#orga7e385d">7.2.1. permissions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="permissions">permissions</span></span></a></li>
+<li><a href="#org2dc98e2">7.2.2. root volume</a></li>
+<li><a href="#org6e66577">7.2.3. block device mapping&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disk">disk</span></span></a></li>
+<li><a href="#org2e2f9f6">7.2.4. AMI does NOT store</a></li>
+</ul>
+</li>
+<li><a href="#org351bdcf">7.3. Configuring an EC2 Instance&#xa0;&#xa0;&#xa0;<span class="tag"><span class="demo">demo</span></span></a>
+<ul>
+<li><a href="#orgaea9bbd">7.3.1. From console search EC2</a></li>
+<li><a href="#org6a3033e">7.3.2. Create keypair</a></li>
+<li><a href="#org7cda1f0">7.3.3. Choose AMI</a></li>
+<li><a href="#orge907726">7.3.4. Select an Instance type</a></li>
+<li><a href="#org8effab0">7.3.5. Configure Instance Details</a></li>
+<li><a href="#orgc56c2a5">7.3.6. configure storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="storage">storage</span></span></a></li>
+<li><a href="#org28f882f">7.3.7. add tags</a></li>
+<li><a href="#org6f1dc81">7.3.8. configure Security Group</a></li>
+</ul>
+</li>
+<li><a href="#orgd0bfa33">7.4. exam tip&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orgb508b38">8. storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="storage">storage</span></span></a>
+<ul>
+<li><a href="#orgbafa29e">8.1. Elasitc Block Storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ebs">ebs</span></span></a></li>
+<li><a href="#orgddf8c27">8.2. S3&#xa0;&#xa0;&#xa0;<span class="tag"><span class="s3">s3</span></span></a>
+<ul>
+<li><a href="#org7a3324d">8.2.1. data storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="data">data</span></span></a></li>
+<li><a href="#org09bba66">8.2.2. access</a></li>
+<li><a href="#orgc16c193">8.2.3. Objects&#xa0;&#xa0;&#xa0;<span class="tag"><span class="object">object</span></span></a></li>
+<li><a href="#org9575da9">8.2.4. Buckets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="bucket">bucket</span></span></a></li>
+<li><a href="#org6ddfb93">8.2.5. Patterns and Anti-patterns</a></li>
+<li><a href="#orgb03d5a4">8.2.6. Configuring an S3 Bucket&#xa0;&#xa0;&#xa0;<span class="tag"><span class="demo">demo</span></span></a></li>
+<li><a href="#org743d002">8.2.7. S3 Security&#xa0;&#xa0;&#xa0;<span class="tag"><span class="security">security</span></span></a></li>
+<li><a href="#org0268622">8.2.8. exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org4627587">9. Cloud Formation&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cfn">cfn</span>&#xa0;<span class="cloud_formation">cloud_formation</span></span></a>
+<ul>
+<li><a href="#orgd8bedf0">9.1. Concets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="concepts">concepts</span></span></a></li>
+<li><a href="#org07c4995">9.2. Template&#xa0;&#xa0;&#xa0;<span class="tag"><span class="template">template</span></span></a>
+<ul>
+<li><a href="#org06a0167">9.2.1. resouces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resouces">resouces</span></span></a></li>
+<li><a href="#orgd6deef2">9.2.2. description</a></li>
+<li><a href="#org2362d11">9.2.3. metadata</a></li>
+<li><a href="#orgd4467ee">9.2.4. parameters</a></li>
+<li><a href="#orgfa94d08">9.2.5. mappings</a></li>
+<li><a href="#org003343d">9.2.6. conditions</a></li>
+<li><a href="#org426c6a5">9.2.7. output</a></li>
+</ul>
+</li>
+<li><a href="#org411c3dd">9.3. Diagram</a>
+<ul>
+<li><a href="#orgb5192e8">9.3.1. stack creation from template</a></li>
+<li><a href="#org002b6b1">9.3.2. stack update from template</a></li>
+</ul>
+</li>
+<li><a href="#orgb5ab371">9.4. stack</a></li>
+<li><a href="#org7cc6556">9.5. Configuring CFN&#xa0;&#xa0;&#xa0;<span class="tag"><span class="configure">configure</span>&#xa0;<span class="example">example</span></span></a>
+<ul>
+<li><a href="#org80d51c8">9.5.1. Must first create a stack</a></li>
+</ul>
+</li>
+<li><a href="#org4fa5b82">9.6. Session Manager&#xa0;&#xa0;&#xa0;<span class="tag"><span class="session_manager">session_manager</span></span></a></li>
+<li><a href="#orgfda237d">9.7. exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org4f19c9d">10. Cloud Watch&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cloudwatch">cloudwatch</span></span></a>
+<ul>
+<li><a href="#org8757a55">10.1. Collects and manages operational data</a></li>
+<li><a href="#org88ed3c1">10.2. metrics&#xa0;&#xa0;&#xa0;<span class="tag"><span class="metrics">metrics</span></span></a></li>
+<li><a href="#orgae733b0">10.3. Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span>&#xa0;<span class="media">media</span></span></a></li>
+<li><a href="#org4910ae6">10.4. Namespace</a></li>
+<li><a href="#org5fdf35e">10.5. Datapoint</a></li>
+<li><a href="#org3d5b52c">10.6. Dimensions</a></li>
+<li><a href="#orgaee9619">10.7. Alarms</a></li>
+<li><a href="#org3ce4f38">10.8. Configuration</a></li>
+<li><a href="#org945a1ac">10.9. Logs&#xa0;&#xa0;&#xa0;<span class="tag"><span class="logs">logs</span></span></a>
+<ul>
+<li><a href="#org47c74ce">10.9.1. Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org96ef941">11. Cloud Trail&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cloudtrail">cloudtrail</span></span></a>
+<ul>
+<li><a href="#org4341833">11.1. CloudTrail Creation</a></li>
+<li><a href="#org61c5df4">11.2. Pricing</a></li>
+<li><a href="#org7e3e478">11.3. exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org7c38204">12. Site Format Example ( for reference )</a>
+<ul>
+<li><a href="#org1020365">12.1. References</a></li>
+<li><a href="#orgc5ef5d5">12.2. Sample: Idea / Subcategory</a></li>
+<li><a href="#orgb492854">12.3. Tags Used:</a></li>
+</ul>
+</li>
+<li><a href="#org2bea345">13. Shared Responsibility Model</a>
+<ul>
+<li><a href="#orgd2093bc">13.1. Security</a></li>
+<li><a href="#org1de77a4">13.2. Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org8a60f1b">14. High Availability, Fault Taulerance, Disaster Recovery&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ha">ha</span>&#xa0;<span class="fault_tolerance">fault_tolerance</span>&#xa0;<span class="dr">dr</span></span></a>
+<ul>
+<li><a href="#orgff6f543">14.1. Summary&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></a></li>
+</ul>
+</li>
+<li><a href="#orgf9450c3">15. DNS&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dns">dns</span></span></a>
+<ul>
+<li><a href="#orga5de484">15.1. zone</a></li>
+<li><a href="#orgf15da16">15.2. resolver</a></li>
+<li><a href="#org73c2909">15.3. terms</a></li>
+<li><a href="#org755e388">15.4. authorization</a></li>
+<li><a href="#org926672a">15.5. TLD</a></li>
+<li><a href="#org79640dc">15.6. process of DNS</a></li>
+<li><a href="#orgbd05d3a">15.7. process attempt 2</a></li>
+<li><a href="#orgf42e0ff">15.8. IANA</a></li>
+<li><a href="#orgd47b8a2">15.9. distributed</a>
+<ul>
+<li><a href="#org23f33f3">15.9.1. DNS Root</a></li>
+<li><a href="#org7cfb9df">15.9.2. root servers</a></li>
+</ul>
+</li>
+<li><a href="#org5838d86">15.10. DNS Records&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dns_records">dns_records</span></span></a>
+<ul>
+<li><a href="#org8eac4a9">15.10.1. NS Records&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ns">ns</span></span></a></li>
+<li><a href="#orge531e68">15.10.2. Record Types</a></li>
+</ul>
+</li>
+<li><a href="#org3b0142c">15.11. TTL&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ttl">ttl</span></span></a>
+<ul>
+<li><a href="#org5927d19">15.11.1. diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org9d7d8a5">15.12. diagrams&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></a>
+<ul>
+<li><a href="#orgbbc524e">15.12.1. Heirarchy</a></li>
+<li><a href="#org5b3aed7">15.12.2. Resolution</a></li>
+</ul>
+</li>
+<li><a href="#orgad86b8f">15.13. exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></a></li>
+</ul>
+</li>
+<li><a href="#org1be1688">16. route 53&#xa0;&#xa0;&#xa0;<span class="tag"><span class="route53">route53</span></span></a>
+<ul>
+<li><a href="#org2c9ed2f">16.1. domain registry</a></li>
+<li><a href="#org0ae6648">16.2. Hosted Zones&#xa0;&#xa0;&#xa0;<span class="tag"><span class="hosted_zones">hosted_zones</span></span></a></li>
+<li><a href="#org2349c73">16.3. Diagram</a>
+<ul>
+<li><a href="#org43f7dee">16.3.1. Registration</a></li>
+</ul>
+</li>
+<li><a href="#org8dc4a21">16.4. host zone files on nameservers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4ce4dcc" class="outline-2">
+<h2 id="org4ce4dcc"><span class="section-number-2">1</span> AWS Accounts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="account">account</span></span></h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Containers for Identities and Resources</li>
+<li>Must have unique email address, this is the <a href="#org1330877">Root User</a></li>
+</ul>
+</div>
+<div id="outline-container-orga019d48" class="outline-3">
+<h3 id="orga019d48"><span class="section-number-3">1.1</span> Account Creation / best practices&#xa0;&#xa0;&#xa0;<span class="tag"><span class="creation">creation</span></span></h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>General/Master account are the same.</li>
+<li><a href="#org1330877">Root User</a> is within this Master account and created upon creatin of master account.
+<ul class="org-ul">
+<li>Root user has full access of this entire account.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc50af94" class="outline-3">
+<h3 id="orgc50af94"><span class="section-number-3">1.2</span> MFA :: Multi Factor Authentication&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mfa">mfa</span></span></h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Generates a code that changes periodically</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdb6ff38" class="outline-3">
+<h3 id="orgdb6ff38"><span class="section-number-3">1.3</span> IAM :: Identity and Access Management&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iam">iam</span></span></h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>By default no permissions</li>
+<li>Comes with AWS accounts by default. Provided Free, no cost.</li>
+<li>attached to identities such as
+<ul class="org-ul">
+<li>iam users, iam groups, iam roles</li>
+</ul></li>
+<li>Globally resilient service, data secure across ALL AWS regions</li>
+</ul>
+</div>
+<div id="outline-container-org2a6e440" class="outline-4">
+<h4 id="org2a6e440"><span class="section-number-4">1.3.1</span> Create other <code>identities</code> inside the root account&#xa0;&#xa0;&#xa0;<span class="tag"><span class="identity">identity</span></span></h4>
+<div class="outline-text-4" id="text-1-3-1">
+</div>
+<ol class="org-ol">
+<li><a id="org5b63e46"></a>roles&#xa0;&#xa0;&#xa0;<span class="tag"><span class="roles">roles</span></span><br />
+<div class="outline-text-5" id="text-1-3-1-1">
+<ul class="org-ul">
+<li>Is a real identity, can be referenced within a resource policy</li>
+<li>Existing on-prem identities can be assigned roles when <b>using single sign on</b> <span class="underline">or</span> <b>there are more than 5000 existing identities</b></li>
+<li>Temporary credentials are assigned via STS for roles</li>
+<li><b>When to use a role</b>
+<ul class="org-ul">
+<li>unknown number of users/apps access, OR over 5000 uses</li>
+</ul></li>
+<li><b>Can be Temporary</b>
+<ul class="org-ul">
+<li>When something temporarily needs to do something, then stops, <b>borrowing permissions for a short time</b></li>
+</ul></li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org311467d"></a>Attachable <a href="#org06227cf">Policies</a>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="policy">policy</span></span><br />
+<ol class="org-ol">
+<li><a id="org06025fc"></a>Trust Policy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="trust">trust</span></span><br />
+<div class="outline-text-7" id="text-1-3-1-1-1-1">
+<ul class="org-ul">
+<li>Controls which identities can assume the role</li>
+<li>Can reference identities in this and other AWS accounts</li>
+<li>Can reference even Facebook, Twitter, etc.</li>
+<li>Can be time limited</li>
+</ul>
+</div>
+</li>
+<li><a id="orgdf6059a"></a>Permissions Policy&#xa0;&#xa0;&#xa0;<span class="tag"><span class="permissions">permissions</span></span><br /></li>
+</ol>
+</li>
+<li><a id="org935ec39"></a><a href="#org4dc9fa7">Lambda</a> Execution Roles&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lambda">lambda</span></span><br />
+<div class="outline-text-6" id="text-1-3-1-1-2">
+<ul class="org-ul">
+<li>Has permissions policy via role to use AWS functions/services</li>
+<li>Uses <code>sts:AssumeRole</code> to access AWS resources based on whatever the Role has. The runtime environment gets these credentials.</li>
+<li>Without Roles for Lambda you would have to hard key keys and permissions.</li>
+</ul>
+</div>
+</li>
+<li><a id="orge033948"></a>Break Glass Key<br />
+<div class="outline-text-6" id="text-1-3-1-1-3">
+<ul class="org-ul">
+<li>Made for emergency to provide different permissions to a principal</li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+<li><a id="org7ef0735"></a>groups&#xa0;&#xa0;&#xa0;<span class="tag"><span class="groups">groups</span></span><br />
+<div class="outline-text-5" id="text-1-3-1-2">
+<ul class="org-ul">
+<li>Container for IAM <a href="#orgbf1e9a9">users</a>.</li>
+<li>Can have <a href="#org06227cf">Policies</a> attached</li>
+<li>You cannot nest groups, no credentials, they only hold users and attach policies, there are a max of 300 groups allowed by default, increasable by a support ticket</li>
+</ul>
+</div>
+</li>
+<li><a id="orgbf1e9a9"></a>users&#xa0;&#xa0;&#xa0;<span class="tag"><span class="users">users</span></span><br />
+<div class="outline-text-5" id="text-1-3-1-3">
+<dl class="org-dl">
+<dt>IAM Users</dt><dd>Anything requiring <b>long term</b> aws access, such as: individual person/application or service accounts
+<ul class="org-ul">
+<li>If you can picture <b>one</b> thing, a <b>named</b> thing that needs access or policy, it should be a <b>user</b></li>
+</ul></dd>
+<dt>(no term)</dt><dd>Can have <a href="#org06227cf">Policies</a> attached</dd>
+</dl>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org936dbd4" class="outline-4">
+<h4 id="org936dbd4"><span class="section-number-4">1.3.2</span> Principals&#xa0;&#xa0;&#xa0;<span class="tag"><span class="principal">principal</span></span></h4>
+<div class="outline-text-4" id="text-1-3-2">
+<dl class="org-dl">
+<dt><b>Principals</b></dt><dd>(Principal or application) makes requests to IAM to interact with a resource</dd>
+<dt>Authentication</dt><dd>Princial on proves that it <b>is</b> the identity it claims to be
+<ul class="org-ul">
+<li>username and password <span class="underline">OR</span> Access keys</li>
+</ul></dd>
+<dt>Authenticated Identity</dt><dd>a principal that proves that it is the identity it claims to be, having used Authentication</dd>
+<dt>Policies</dt><dd>Once ther is an authenticated identity it can know which <a href="#org06227cf">Policies</a>  will apply</dd>
+<dt>Diagram</dt><dd></dd>
+</dl>
+
+<div class="figure">
+<p><img src="./images/screenshot-16.png" alt="screenshot-16.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb79ebd8" class="outline-4">
+<h4 id="orgb79ebd8"><span class="section-number-4">1.3.3</span> IDP&#xa0;&#xa0;&#xa0;<span class="tag"><span class="idp">idp</span></span></h4>
+<div class="outline-text-4" id="text-1-3-3">
+<dl class="org-dl">
+<dt>An ID Provider (IDP)</dt><dd>manages identities (create/etc)</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgc0bc007" class="outline-4">
+<h4 id="orgc0bc007"><span class="section-number-4">1.3.4</span> Authentication&#xa0;&#xa0;&#xa0;<span class="tag"><span class="authentication">authentication</span></span></h4>
+<div class="outline-text-4" id="text-1-3-4">
+<dl class="org-dl">
+<dt>Prove who you are</dt><dd>username/pass/bio</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org7bd10e7" class="outline-4">
+<h4 id="org7bd10e7"><span class="section-number-4">1.3.5</span> Auhtorization&#xa0;&#xa0;&#xa0;<span class="tag"><span class="authorization">authorization</span></span></h4>
+<div class="outline-text-4" id="text-1-3-5">
+<dl class="org-dl">
+<dt>Policies</dt><dd>what you may do</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org02d2112" class="outline-4">
+<h4 id="org02d2112"><span class="section-number-4">1.3.6</span> Identity Federation&#xa0;&#xa0;&#xa0;<span class="tag"><span class="federation">federation</span></span></h4>
+<div class="outline-text-4" id="text-1-3-6">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_172753_n0S2Ob.png" alt="aws-general.org_20210315_172753_n0S2Ob.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb494a26" class="outline-4">
+<h4 id="orgb494a26"><span class="section-number-4">1.3.7</span> Exam Notes&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h4>
+<div class="outline-text-4" id="text-1-3-7">
+<ul class="org-ul">
+<li>IAM has no cost and is provided free</li>
+<li>IAM is a global service, all AWS zones, and therefore has global resilience</li>
+<li>IAM allows or denys identities on it&rsquo;s corresponding AWS Account</li>
+<li>IAM has no <code>direct</code> control over external accounts/users</li>
+<li>IAM lets the account owner make use of <code>identity federation</code> and <code>MFA</code>.  <a href="#org02d2112">Identity Federation</a> are other external ways people authenticate</li>
+<li><b>IAM groups cannot be <span class="underline">logged</span> into</b></li>
+<li>No <b>all</b> users group by default</li>
+<li>Groups are <b>not</b> a true identity and cannot be referenced as a <b>principal</b> in a policy</li>
+<li>External accounts can be used in AWS Directly : <b>FALSE</b>, Google, Facebook, etc cannot use AWS directly BUT an external account can assume an AWS role that is able to access a resource</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4211019" class="outline-4">
+<h4 id="org4211019"><span class="section-number-4">1.3.8</span> IAM Access Keys&#xa0;&#xa0;&#xa0;<span class="tag"><span class="keys">keys</span></span></h4>
+<div class="outline-text-4" id="text-1-3-8">
+</div>
+<ol class="org-ol">
+<li><a id="org5fd4aa6"></a>Username and Password :: Web console<br />
+<div class="outline-text-5" id="text-1-3-8-1">
+<ul class="org-ul">
+<li>IAM user may only have <span class="underline">one</span> username and <span class="underline">one</span> password</li>
+</ul>
+</div>
+</li>
+<li><a id="org5d24b06"></a>Access Keys :: APIs and console<br />
+<div class="outline-text-5" id="text-1-3-8-2">
+<ul class="org-ul">
+<li>IAM Users can have up to <span class="underline">two</span> access keys</li>
+<li>Can be created/deletes and made inactive/active</li>
+<li>Must be changed by the user</li>
+<li>Made of two parts: <span class="underline">access<sub>key</sub><sub>id</sub></span> and <span class="underline">secret<sub>access</sub><sub>key</sub></span></li>
+<li>Cannot be downloaded again</li>
+<li>must be deleted and then recreated</li>
+<li>Two sets for rotation of keys</li>
+<li>Root users should <span class="underline">not</span> have access keys, instead should be IAM users</li>
+<li>Added via &ldquo;My Security Credentials -&gt; Create Access Key&rdquo;</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org06227cf" class="outline-4">
+<h4 id="org06227cf"><span class="section-number-4">1.3.9</span> Policies&#xa0;&#xa0;&#xa0;<span class="tag"><span class="policy">policy</span></span></h4>
+<div class="outline-text-4" id="text-1-3-9">
+<dl class="org-dl">
+<dt>Allow/Deny access by</dt><dd>Attaching to <a href="#org5b63e46">roles</a> , <a href="#org7ef0735">groups</a> , or <a href="#orgbf1e9a9">users</a> :iam:</dd>
+<dt>(no term)</dt><dd>definitions of access</dd>
+<dt>(no term)</dt><dd>Written in JSON</dd>
+</dl>
+</div>
+<ol class="org-ol">
+<li><a id="orgd5bf5f5"></a>Inline Policy<br />
+<div class="outline-text-5" id="text-1-3-9-1">
+<ul class="org-ul">
+<li>Json Policy Document</li>
+<li>Applying a policy to each resource</li>
+<li><b>Primarily used for Exceptions</b></li>
+</ul>
+</div>
+</li>
+<li><a id="org1fbfeca"></a>Managed Policy<br />
+<div class="outline-text-5" id="text-1-3-9-2">
+<ul class="org-ul">
+<li>Created as it&rsquo;s own object that is attached to policies</li>
+<li>Good for: Users, Groups, Roles</li>
+<li>Reusable, Low Management Overhead</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org263dfae"></a>AWS Managed<br /></li>
+<li><a id="org571c785"></a>Custom Managed<br /></li>
+</ol>
+</li>
+<li><a id="orgaf983e8"></a>Resource Policy<br />
+<div class="outline-text-5" id="text-1-3-9-3">
+<ul class="org-ul">
+<li>is a form of resource policy, similar to an identity policy but attached to the bucket. the advantage is cross account permissions.</li>
+<li>You can determine if a policy is resource or identity policy IF a document has a &ldquo;Principal&rdquo; definition. If it does, it is likely a resource policy. Alternatively, if a this field is absent, the implication is that identity the policy is applying to <b>is</b> the principal.</li>
+<li>bucket policies are a type of resource policy: <a href="#org743d002">S3 Security</a>
+<ul class="org-ul">
+<li>there can only be <span class="underline">one</span> policy attached to a bucket, but it can have as many statements as needed</li>
+</ul></li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgbb56229" class="outline-4">
+<h4 id="orgbb56229"><span class="section-number-4">1.3.10</span> Policy Document&#xa0;&#xa0;&#xa0;<span class="tag"><span class="document">document</span></span></h4>
+<div class="outline-text-4" id="text-1-3-10">
+</div>
+<ol class="org-ol">
+<li><a id="orgbad3a7a"></a>Statements&#xa0;&#xa0;&#xa0;<span class="tag"><span class="statement">statement</span></span><br />
+<div class="outline-text-5" id="text-1-3-10-1">
+<ul class="org-ul">
+<li>Permit/Grant/Deny AWS Resources</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="orgf0bf227"></a>Statement ID&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sid">sid</span></span><br />
+<div class="outline-text-6" id="text-1-3-10-1-1">
+<ul class="org-ul">
+<li>optional, explains what this does, inform reader what a statement does. Best practice to always use Statement IDs</li>
+<li>example:
+<ul class="org-ul">
+<li><code>"Sid": "FullAccess",</code></li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="org89da6ed"></a>Effect&#xa0;&#xa0;&#xa0;<span class="tag"><span class="effect">effect</span></span><br />
+<div class="outline-text-6" id="text-1-3-10-1-2">
+<ul class="org-ul">
+<li>What the statement does, allow or deny</li>
+<li>Example:
+<ul class="org-ul">
+<li><code>"Effect": "Allow",</code></li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="orgab01637"></a>Action&#xa0;&#xa0;&#xa0;<span class="tag"><span class="action">action</span></span><br />
+<div class="outline-text-6" id="text-1-3-10-1-3">
+<ul class="org-ul">
+<li>What it does</li>
+<li>Example:
+<ul class="org-ul">
+<li><code>"Action": ["s3:*"],</code></li>
+</ul></li>
+</ul>
+</div>
+</li>
+<li><a id="orgd449ead"></a>Resource&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resource">resource</span></span><br />
+<div class="outline-text-6" id="text-1-3-10-1-4">
+<ul class="org-ul">
+<li>AWS Resource, use wildcards, <a href="#org4a9a745">AWS Resource Name</a> (arn)</li>
+<li>Example:
+<ul class="org-ul">
+<li><code>"Resource": [ "arn:aws:s3:::catgifs", "arn:aws:s3:::catgifs/*"]</code></li>
+</ul></li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgadfd5c0"></a>Priority Level of Statements<br />
+<div class="outline-text-6" id="text-1-3-10-1-5">
+<dl class="org-dl">
+<dt>Explicit Deny</dt><dd>If something is explicitly denied, nothing can overrule it.</dd>
+<dt>Explicit Allow</dt><dd>Always takes affect <b>unless</b> there is an <span class="underline">explicit deny</span> defined</dd>
+<dt>Default Deny</dt><dd>The default is <span class="underline">implicit deny</span></dd>
+</dl>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div id="outline-container-org18c0740" class="outline-4">
+<h4 id="org18c0740"><span class="section-number-4">1.3.11</span> Example Document&#xa0;&#xa0;&#xa0;<span class="tag"><span class="example">example</span>&#xa0;<span class="exam_tip">exam_tip</span></span></h4>
+<div class="outline-text-4" id="text-1-3-11">
+<div class="org-src-container">
+<pre class="src src-json">{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullAccess",
+      "Effect": "Allow",
+      "Action": ["s3:*"],
+      "Resource": [ "*"]
+    },
+    {
+      "Sid": "DenyCatBucket",
+      "Effect": "Deny",
+      "Action": ["s3:*"],
+      "Resource": [ "arn:aws:s3:::catgifs", "arn:aws:s3:::catgifs/*"]
+    },
+  ]
+}
+</pre>
+</div>
+<ul class="org-ul">
+<li>Diagram
+<img src="./images/screenshot-12.png" alt="screenshot-12.png" /></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1330877" class="outline-3">
+<h3 id="org1330877"><span class="section-number-3">1.4</span> Root User&#xa0;&#xa0;&#xa0;<span class="tag"><span class="root">root</span>&#xa0;<span class="user">user</span></span></h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>Tied to email supplied upon creation</li>
+<li>Full control over that account</li>
+<li>Cannot be restricted</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgec6bdd8" class="outline-3">
+<h3 id="orgec6bdd8"><span class="section-number-3">1.5</span> AWS Organizations&#xa0;&#xa0;&#xa0;<span class="tag"><span class="organizations">organizations</span></span></h3>
+<div class="outline-text-3" id="text-1-5">
+<dl class="org-dl">
+<dt>Management Account (Master Account)</dt><dd>An AWS account creates an organization but lives outside of the account, is not WITHIN the AWS account</dd>
+<dt>Member Accounts</dt><dd>Other AWS Accounts that can be added to the organization</dd>
+<dt>Organization Root</dt><dd>is a container within an organization that can contain AWS accounts such as Member Accounts</dd>
+<dt>Organization Units</dt><dd>Units within an Organization, can contain other OUs or AWS accounts</dd>
+<dt>Billing</dt><dd>Billing is passed through <span class="underline">to</span> the management account of the organization, or Payer Account
+<ul class="org-ul">
+<li>One bill for everything in the organization</li>
+</ul></dd>
+<dt>Role Switch</dt><dd>switch from a federated account into a different role in another AWS account that is <b>within</b> the <b>organization</b>
+<ul class="org-ul">
+<li>This is setup <b>automatically</b> if you create a new account from within an existing organization</li>
+<li>when inviting an existing account this must be configured</li>
+</ul></dd>
+<dt>(no term)</dt><dd><b>Creating Accounts</b>
+<ul class="org-ul">
+<li>Can create accounts directly within the organization instead of the invitation process</li>
+</ul></dd>
+</dl>
+</div>
+<div id="outline-container-orga0ea245" class="outline-4">
+<h4 id="orga0ea245"><span class="section-number-4">1.5.1</span> Example</h4>
+<div class="outline-text-4" id="text-1-5-1">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_174842_geCV5l.png" alt="aws-general.org_20210315_174842_geCV5l.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgde024a0" class="outline-4">
+<h4 id="orgde024a0"><span class="section-number-4">1.5.2</span> Organziations Allow</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<ul class="org-ul">
+<li>Single payer and centralized cost trackign</li>
+<li>Create and invite accoutns</li>
+<li>Apply policy-based controls</li>
+<li>simplify organization-wide management of AWS services</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaa85ac3" class="outline-4">
+<h4 id="orgaa85ac3"><span class="section-number-4">1.5.3</span> Service Control Policies&#xa0;&#xa0;&#xa0;<span class="tag"><span class="scp">scp</span>&#xa0;<span class="service_control_policy">service_control_policy</span></span></h4>
+<div class="outline-text-4" id="text-1-5-3">
+<ul class="org-ul">
+<li>Policy Document that can be attached to an organization as a whole, or one or more OU, or even individual AWS Accounts
+<ul class="org-ul">
+<li>These inherit down the organization tree</li>
+</ul></li>
+<li>Management Account <b>cannot</b> be affected by SCP, cannot be restricted. Best practice is then to <b>not</b> use the management account, and instead different accounts created for things</li>
+<li>SCP limits what the account can do, including the <b>root</b> account. SCPs are account permission boundaries. SCPs are not restricting root user, they are restricting what the actual AWS Account can do, thereby restrticing the <b>root</b> user. SCPs <b>do not</b> grant access, they only restrict / boundary</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="orgba67cae"></a>Default Policy<br />
+<div class="outline-text-5" id="text-1-5-3-1">
+<ul class="org-ul">
+<li>automatically applied, a deny list. This is called FullAWSAccess</li>
+<li>Default policy can be removed for explicit, global deny and then add Allow Policy for each</li>
+</ul>
+</div>
+</li>
+<li><a id="orgad1c960"></a>Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span><br />
+<ol class="org-ol">
+<li><a id="org56c94e7"></a>one<br />
+<div class="outline-text-6" id="text-1-5-3-2-1">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_190406_GlxVi2.png" alt="aws-general.org_20210315_190406_GlxVi2.png" />
+</p>
+</div>
+</div>
+</li>
+<li><a id="org136106a"></a>two<br /></li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org4dc9fa7" class="outline-2">
+<h2 id="org4dc9fa7"><span class="section-number-2">2</span> Lambda&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lambda">lambda</span></span></h2>
+</div>
+<div id="outline-container-org7c50b49" class="outline-2">
+<h2 id="org7c50b49"><span class="section-number-2">3</span> aws-cli&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cli">cli</span>&#xa0;<span class="aws">aws</span></span></h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>Must provide a profile with each command, or specify a default profile</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org79ad562" class="outline-2">
+<h2 id="org79ad562"><span class="section-number-2">4</span> Cloud Computing&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="cloud">cloud</span></span></h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org03003c7" class="outline-3">
+<h3 id="org03003c7"><span class="section-number-3">4.1</span> Defined by NIST&#xa0;&#xa0;&#xa0;<span class="tag"><span class="nist">nist</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>5 characteristics</li>
+</ul>
+</div>
+<div id="outline-container-org0020149" class="outline-4">
+<h4 id="org0020149"><span class="section-number-4">4.1.1</span> on demand self service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="self_service">self_service</span></span></h4>
+<div class="outline-text-4" id="text-4-1-1">
+</div>
+<ol class="org-ol">
+<li><a id="org2ec0ae3"></a>can provision capabilites as needed <code>without human interaction</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+</ol>
+</div>
+<div id="outline-container-org1242c98" class="outline-4">
+<h4 id="org1242c98"><span class="section-number-4">4.1.2</span> broad network access&#xa0;&#xa0;&#xa0;<span class="tag"><span class="net_access">net_access</span></span></h4>
+<div class="outline-text-4" id="text-4-1-2">
+</div>
+<ol class="org-ol">
+<li><a id="org79b51f4"></a>capabilties are available over <code>network</code> thru <code>standard mechanisms</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+</ol>
+</div>
+<div id="outline-container-org63b4c02" class="outline-4">
+<h4 id="org63b4c02"><span class="section-number-4">4.1.3</span> resource pooling&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resource_pooling">resource_pooling</span></span></h4>
+<div class="outline-text-4" id="text-4-1-3">
+</div>
+<ol class="org-ol">
+<li><a id="org9d97537"></a>there is a sense of <code>location independence</code> no <code>control</code> or <code>knowledge</code> over the exact <code>location</code> of the resources&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+<li><a id="org5df5140"></a>resources are <code>pooled</code> to serve many customers using <code>multi-tenant</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span>&#xa0;<span class="pool">pool</span>&#xa0;<span class="multi_tenant">multi_tenant</span></span><br />
+<div class="outline-text-5" id="text-4-1-3-2">
+<ul class="org-ul">
+<li>pooling allows for easy scaling</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org0db77ce" class="outline-4">
+<h4 id="org0db77ce"><span class="section-number-4">4.1.4</span> rapid elasticity&#xa0;&#xa0;&#xa0;<span class="tag"><span class="elastic">elastic</span>&#xa0;<span class="rapid">rapid</span></span></h4>
+<div class="outline-text-4" id="text-4-1-4">
+</div>
+<ol class="org-ol">
+<li><a id="org651d515"></a>capabilities can be <code>elastically provisioned</code> and released to scale <code>rapidly</code> outward/inward with demand&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+<li><a id="orgb638cdf"></a>capabilities <code>seem</code> to be <code>unlimited</code> from a consumer perspective&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+</ol>
+</div>
+<div id="outline-container-orga310438" class="outline-4">
+<h4 id="orga310438"><span class="section-number-4">4.1.5</span> measured service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="measured_service">measured_service</span></span></h4>
+<div class="outline-text-4" id="text-4-1-5">
+</div>
+<ol class="org-ol">
+<li><a id="orgf31cca4"></a>resource usage can be <code>monitored, controlled, reported AND billed</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br /></li>
+<li><a id="org484fd1a"></a><code>on-demand billing</code><br /></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org3159e92" class="outline-3">
+<h3 id="org3159e92"><span class="section-number-3">4.2</span> Multicloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="multicloud">multicloud</span></span></h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>multiple public cloud environments</li>
+<li>Use <code>more</code> than <code>one</code> public cloud</li>
+</ul>
+</div>
+<div id="outline-container-org5e0d0af" class="outline-4">
+<h4 id="org5e0d0af"><span class="section-number-4">4.2.1</span> &ldquo;Singplepane&rdquo;&#xa0;&#xa0;&#xa0;<span class="tag"><span class="singlepane">singlepane</span></span></h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+a service provider that provides access to several cloud vendors via one &ldquo;pane&rdquo;
+</p>
+</div>
+</div>
+<div id="outline-container-org4e44d0f" class="outline-4">
+<h4 id="org4e44d0f"><span class="section-number-4">4.2.2</span> private cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="private">private</span></span></h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+Still must meet :: <a href="#org03003c7">Defined by NIST</a>
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgeb91f37"></a>AWS Outposts&#xa0;&#xa0;&#xa0;<span class="tag"><span class="outposts">outposts</span></span><br /></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org20e25a5" class="outline-3">
+<h3 id="org20e25a5"><span class="section-number-3">4.3</span> Hybridcloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="hybridcloud">hybridcloud</span></span></h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li>private cloud in conjunction with public cloud together</li>
+<li><code>Public</code> AND <code>private</code> cloud</li>
+</ul>
+</div>
+<div id="outline-container-orgf12ebed" class="outline-4">
+<h4 id="orgf12ebed"><span class="section-number-4">4.3.1</span> <code>NOT</code> the same as cloud and on-prem, that is a <code>HYBRID ENV</code>&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></h4>
+</div>
+</div>
+<div id="outline-container-org1d267da" class="outline-3">
+<h3 id="org1d267da"><span class="section-number-3">4.4</span> private cloud</h3>
+<div class="outline-text-3" id="text-4-4">
+<ul class="org-ul">
+<li>on premises <code>real</code> cloud</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgffe9b55" class="outline-3">
+<h3 id="orgffe9b55"><span class="section-number-3">4.5</span> public cloud</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>ONE public cloud</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgad556d9" class="outline-3">
+<h3 id="orgad556d9"><span class="section-number-3">4.6</span> Cloud Service Models&#xa0;&#xa0;&#xa0;<span class="tag"><span class="as_a_service">as_a_service</span>&#xa0;<span class="service">service</span></span></h3>
+<div class="outline-text-3" id="text-4-6">
+</div>
+<div id="outline-container-orgc4827cc" class="outline-4">
+<h4 id="orgc4827cc"><span class="section-number-4">4.6.1</span> unit of consumption</h4>
+<div class="outline-text-4" id="text-4-6-1">
+<ul class="org-ul">
+<li>what is consumed, what you are responsible to manage</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6d88959" class="outline-4">
+<h4 id="org6d88959"><span class="section-number-4">4.6.2</span> Infrastructure as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="iaas">iaas</span></span></h4>
+<div class="outline-text-4" id="text-4-6-2">
+<ul class="org-ul">
+<li>virtualization, servers, infrastructure and facilities are owned by vender, OS is consumed by the user</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="orgd1e0ecd"></a>examples :: EC2&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ec2">ec2</span></span><br />
+<div class="outline-text-5" id="text-4-6-2-1">
+<p>
+Elastic Compute Cubed
+</p>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgccc8d6b" class="outline-4">
+<h4 id="orgccc8d6b"><span class="section-number-4">4.6.3</span> Platform as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="paas">paas</span></span></h4>
+<div class="outline-text-4" id="text-4-6-3">
+<ul class="org-ul">
+<li>virtualization, servers, infrastructure, facilities, OS and container are owned by vender, runtime is consumed by the user</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org8ad56b4"></a>examples :: heroku<br /></li>
+</ol>
+</div>
+<div id="outline-container-orgad60f20" class="outline-4">
+<h4 id="orgad60f20"><span class="section-number-4">4.6.4</span> Software as a Service&#xa0;&#xa0;&#xa0;<span class="tag"><span class="saas">saas</span></span></h4>
+<div class="outline-text-4" id="text-4-6-4">
+<p>
+virtualization, servers, infrastructure, facilities, OS and container, runtime and data are owned by vender, the application is consumed by the user
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="orgd303da1"></a>examples :: dropbox, gmail<br /></li>
+</ol>
+</div>
+<div id="outline-container-org3dee431" class="outline-4">
+<h4 id="org3dee431"><span class="section-number-4">4.6.5</span> Not Cloud</h4>
+<div class="outline-text-4" id="text-4-6-5">
+</div>
+<ol class="org-ol">
+<li><a id="orgc65413b"></a>On-Prem<br />
+<div class="outline-text-5" id="text-4-6-5-1">
+<ul class="org-ul">
+<li>everything from facilities to application</li>
+</ul>
+</div>
+</li>
+<li><a id="org03f1467"></a>DC Hosted<br />
+<div class="outline-text-5" id="text-4-6-5-2">
+<ul class="org-ul">
+<li>facilities are owned by vendor</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org5d95b4c" class="outline-2">
+<h2 id="org5d95b4c"><span class="section-number-2">5</span> AWS Infrastructure&#xa0;&#xa0;&#xa0;<span class="tag"><span class="aws">aws</span>&#xa0;<span class="infrastructure">infrastructure</span></span></h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org12e4c6a" class="outline-3">
+<h3 id="org12e4c6a"><span class="section-number-3">5.1</span> References&#xa0;&#xa0;&#xa0;<span class="tag"><span class="refernces">refernces</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><a href="https://www.infrastructure.aws/">https://www.infrastructure.aws/</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc2ed552" class="outline-3">
+<h3 id="orgc2ed552"><span class="section-number-3">5.2</span> AWS Regions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="region">region</span></span></h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>creation of AWS, does not technically map to a continent</li>
+<li>has ALL AWS avaible: compute, storage, db, AI, analytics</li>
+<li>Geographically spread</li>
+</ul>
+</div>
+<div id="outline-container-orgfd0b702" class="outline-4">
+<h4 id="orgfd0b702"><span class="section-number-4">5.2.1</span> Benefits of regions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></h4>
+<div class="outline-text-4" id="text-5-2-1">
+<dl class="org-dl">
+<dt>geographic separation</dt><dd>isolated <span class="underline">fault domain</span></dd>
+<dt>geopolitical seperation</dt><dd>different <span class="underline">governance</span></dd>
+<dt>location control</dt><dd><span class="underline">Performance</span></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org441587c" class="outline-4">
+<h4 id="org441587c"><span class="section-number-4">5.2.2</span> Naming Convention</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<dl class="org-dl">
+<dt>REGION CODE</dt><dd>Code/designation, ex: <code>ap-southeast-2</code></dd>
+<dt>REGION NAME</dt><dd>Real name, ex: Asia Pacific (Sydney)</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-org3b23e7f" class="outline-3">
+<h3 id="org3b23e7f"><span class="section-number-3">5.3</span> AWS Edge Location&#xa0;&#xa0;&#xa0;<span class="tag"><span class="edge_location">edge_location</span></span></h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+<div id="outline-container-org61992ba" class="outline-4">
+<h4 id="org61992ba"><span class="section-number-4">5.3.1</span> CDN-esque, far more widespread, store data closer to customers. Content Distribution Services&#xa0;&#xa0;&#xa0;<span class="tag"><span class="CDS">CDS</span>&#xa0;<span class="CDN">CDN</span></span></h4>
+</div>
+</div>
+<div id="outline-container-org266ab07" class="outline-3">
+<h3 id="org266ab07"><span class="section-number-3">5.4</span> AWS Availability Zones&#xa0;&#xa0;&#xa0;<span class="tag"><span class="availability_zone">availability_zone</span></span></h3>
+<div class="outline-text-3" id="text-5-4">
+<dl class="org-dl">
+<dt>availability zone</dt><dd>zones INSIDE of a region, designated with a letter following the region code ( see <a href="#org441587c">Naming Convention</a> )</dd>
+<dt>Isolated Facilities</dt><dd>in case of catastrotic failure. No visibility as to what is inside an AZ</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org46958af" class="outline-3">
+<h3 id="org46958af"><span class="section-number-3">5.5</span> Service Resilience&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resilience">resilience</span></span></h3>
+<div class="outline-text-3" id="text-5-5">
+<dl class="org-dl">
+<dt>Globally Resilient</dt><dd>Entire region can fail, service will continue
+<dl class="org-dl">
+<dt>Examples</dt><dd>IAM, Route53</dd>
+</dl></dd>
+<dt>Region Resilient</dt><dd>One set of data per region, generally replicate data to other Availability Zones, within a region</dd>
+<dt>AZ Resilient</dt><dd>Only within Availability Zones</dd>
+<dt>(no term)</dt><dd>Cantril AWS Global Infrastucture</dd>
+</dl>
+
+<div class="figure">
+<p><img src="./images/screenshot-02.png" alt="screenshot-02.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4a9a745" class="outline-3">
+<h3 id="org4a9a745"><span class="section-number-3">5.6</span> AWS Resource Name&#xa0;&#xa0;&#xa0;<span class="tag"><span class="arn">arn</span></span></h3>
+<div class="outline-text-3" id="text-5-6">
+<ul class="org-ul">
+<li>specific to every AWS resource
+<ul class="org-ul">
+<li>ex: <code>arn:aws:s3:::bucket-name</code></li>
+<li>in this exame region and account number are excluded as <a href="#orgddf8c27">S3</a> buckets must have globally unique names</li>
+</ul></li>
+<li>can use wildcards</li>
+</ul>
+</div>
+<div id="outline-container-org303ddbc" class="outline-4">
+<h4 id="org303ddbc"><span class="section-number-4">5.6.1</span> Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></h4>
+<div class="outline-text-4" id="text-5-6-1">
+
+<div class="figure">
+<p><img src="./images/screenshot-17.png" alt="screenshot-17.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org6a8d42b" class="outline-4">
+<h4 id="org6a8d42b"><span class="section-number-4">5.6.2</span> exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h4>
+<div class="outline-text-4" id="text-5-6-2">
+<ul class="org-ul">
+<li><p>
+Maximum numbers  of IAM users per account
+</p>
+<details>
+5000
+</details></li>
+<li><p>
+Maximum number of groups an IAM user can be in
+</p>
+<details>
+10
+</details></li>
+<li><p>
+cases when NOT to use IAM
+</p>
+<details>
+internet scale, larg orgs, org mergers
+</details></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb3618bd" class="outline-2">
+<h2 id="orgb3618bd"><span class="section-number-2">6</span> Virtual Private Cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="vpc">vpc</span></span></h2>
+<div class="outline-text-2" id="text-6">
+<dl class="org-dl">
+<dt>VPC</dt><dd>Private networks inside AWS
+<ul class="org-ul">
+<li><span class="underline">one account &amp; one region</span></li>
+</ul></dd>
+<dt>(no term)</dt><dd>A VPC exists within a region, by default cannot cross this</dd>
+<dt>(no term)</dt><dd>Regionally Resilient, see <a href="#org46958af">Service Resilience</a></dd>
+<dt><a href="#org20e25a5">Hybridcloud</a></dt><dd>can be used to connect to on-prem</dd>
+<dt><a href="#org3159e92">Multicloud</a></dt><dd>can be used to connect to other cloud</dd>
+<dt>(no term)</dt><dd>Private and Isolated by default</dd>
+</dl>
+</div>
+<div id="outline-container-org62b23ae" class="outline-3">
+<h3 id="org62b23ae"><span class="section-number-3">6.1</span> default VPC</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>only <span class="underline">ONE</span> per region</li>
+</ul>
+</div>
+<div id="outline-container-org8ff6f10" class="outline-4">
+<h4 id="org8ff6f10"><span class="section-number-4">6.1.1</span> Network</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<dl class="org-dl">
+<dt>VPC CIDR</dt><dd>Network Provisioned for that VPC
+<ul class="org-ul">
+<li>everything within VPC uses this network</li>
+<li>172.31.0.0/16
+<ul class="org-ul">
+<li>Availability zones each have a subnet within this CIDR</li>
+<li>Subnets are /20 in <span class="underline">each AZ</span> in the <span class="underline">region</span></li>
+</ul></li>
+<li>can be removed</li>
+</ul></dd>
+<dt>(no term)</dt><dd>Everything provisioned will get a public IPv4 Address</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-orgab28be5" class="outline-3">
+<h3 id="orgab28be5"><span class="section-number-3">6.2</span> custom VPC</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li>can have <span class="underline">MANY</span> per region</li>
+<li>private by default</li>
+<li>May have custom</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8e6e1dc" class="outline-3">
+<h3 id="org8e6e1dc"><span class="section-number-3">6.3</span> Internet Gateway&#xa0;&#xa0;&#xa0;<span class="tag"><span class="igw">igw</span></span></h3>
+</div>
+<div id="outline-container-org6c6d942" class="outline-3">
+<h3 id="org6c6d942"><span class="section-number-3">6.4</span> Security Group&#xa0;&#xa0;&#xa0;<span class="tag"><span class="sg">sg</span></span></h3>
+<div class="outline-text-3" id="text-6-4">
+<ul class="org-ul">
+<li>can be attached to as many or few services as needed</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org63d2080" class="outline-3">
+<h3 id="org63d2080"><span class="section-number-3">6.5</span> NACL&#xa0;&#xa0;&#xa0;<span class="tag"><span class="nacl">nacl</span></span></h3>
+</div>
+</div>
+<div id="outline-container-org37a0304" class="outline-2">
+<h2 id="org37a0304"><span class="section-number-2">7</span> Elastic Compute Cloud&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ec2">ec2</span></span></h2>
+<div class="outline-text-2" id="text-7">
+<dl class="org-dl">
+<dt>EC2</dt><dd>AWS implementation of <a href="#org6d88959">Infrastructure as a Service</a>
+<ul class="org-ul">
+<li>unit of consumption is the service</li>
+<li><span class="underline">private</span> by default and uses <a href="#orgb3618bd">Virtual Private Cloud</a> networking</li>
+<li id="AZ Resilient">Instance fails if the AZ fails, see <a href="#org266ab07">AWS Availability Zones</a></li>
+<li>different sizes and capabilities</li>
+<li>on demand billing <span class="underline">per second</span></li>
+</ul></dd>
+</dl>
+</div>
+<div id="outline-container-org07b01d1" class="outline-3">
+<h3 id="org07b01d1"><span class="section-number-3">7.1</span> Instance Lifecycle&#xa0;&#xa0;&#xa0;<span class="tag"><span class="lifecycle">lifecycle</span>&#xa0;<span class="control">control</span></span></h3>
+<div class="outline-text-3" id="text-7-1">
+</div>
+<div id="outline-container-org20c65d0" class="outline-4">
+<h4 id="org20c65d0"><span class="section-number-4">7.1.1</span> running</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<ul class="org-ul">
+<li>Instance is running consuming CPU, RAM, Net, Disk and billing continues per second</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbbfc4eb" class="outline-4">
+<h4 id="orgbbfc4eb"><span class="section-number-4">7.1.2</span> pending</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<ul class="org-ul">
+<li>instance is created but not yet started</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfdd9ca0" class="outline-4">
+<h4 id="orgfdd9ca0"><span class="section-number-4">7.1.3</span> stopped</h4>
+<div class="outline-text-4" id="text-7-1-3">
+<ul class="org-ul">
+<li>no CPU, RAM, Net, billing. but instance still bills per second for disk usage</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb171fe6" class="outline-4">
+<h4 id="orgb171fe6"><span class="section-number-4">7.1.4</span> terminated</h4>
+<div class="outline-text-4" id="text-7-1-4">
+<ul class="org-ul">
+<li>At this point the instance is deleted / removed / unprovisioned, no resource are consumed and no billing continues.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org9e31089" class="outline-3">
+<h3 id="org9e31089"><span class="section-number-3">7.2</span> Amazon Machine Image&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ami">ami</span></span></h3>
+<div class="outline-text-3" id="text-7-2">
+<dl class="org-dl">
+<dt>AMI</dt><dd>can be created FROM an <a href="#org37a0304">Elastic Compute Cloud</a> instance or an AMI may be used to create an EC2 instance</dd>
+</dl>
+</div>
+<div id="outline-container-orga7e385d" class="outline-4">
+<h4 id="orga7e385d"><span class="section-number-4">7.2.1</span> permissions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="permissions">permissions</span></span></h4>
+<div class="outline-text-4" id="text-7-2-1">
+<dl class="org-dl">
+<dt>public</dt><dd>everyone allowed</dd>
+<dt>owner</dt><dd><span class="underline">implicit</span> allow</dd>
+<dt>explicit</dt><dd>specific AWS accounts allowed</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org2dc98e2" class="outline-4">
+<h4 id="org2dc98e2"><span class="section-number-4">7.2.2</span> root volume</h4>
+<div class="outline-text-4" id="text-7-2-2">
+<ul class="org-ul">
+<li>boot drive</li>
+<li>etc</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6e66577" class="outline-4">
+<h4 id="org6e66577"><span class="section-number-4">7.2.3</span> block device mapping&#xa0;&#xa0;&#xa0;<span class="tag"><span class="disk">disk</span></span></h4>
+<div class="outline-text-4" id="text-7-2-3">
+<ul class="org-ul">
+<li>which volume is boot, data, etc</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2e2f9f6" class="outline-4">
+<h4 id="org2e2f9f6"><span class="section-number-4">7.2.4</span> AMI does NOT store</h4>
+<div class="outline-text-4" id="text-7-2-4">
+<ul class="org-ul">
+<li>instance settings</li>
+<li>network settings</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org351bdcf" class="outline-3">
+<h3 id="org351bdcf"><span class="section-number-3">7.3</span> Configuring an EC2 Instance&#xa0;&#xa0;&#xa0;<span class="tag"><span class="demo">demo</span></span></h3>
+<div class="outline-text-3" id="text-7-3">
+</div>
+<div id="outline-container-orgaea9bbd" class="outline-4">
+<h4 id="orgaea9bbd"><span class="section-number-4">7.3.1</span> From console search EC2</h4>
+</div>
+<div id="outline-container-org6a3033e" class="outline-4">
+<h4 id="org6a3033e"><span class="section-number-4">7.3.2</span> Create keypair</h4>
+</div>
+<div id="outline-container-org7cda1f0" class="outline-4">
+<h4 id="org7cda1f0"><span class="section-number-4">7.3.3</span> Choose AMI</h4>
+</div>
+<div id="outline-container-orge907726" class="outline-4">
+<h4 id="orge907726"><span class="section-number-4">7.3.4</span> Select an Instance type</h4>
+</div>
+<div id="outline-container-org8effab0" class="outline-4">
+<h4 id="org8effab0"><span class="section-number-4">7.3.5</span> Configure Instance Details</h4>
+<div class="outline-text-4" id="text-7-3-5">
+</div>
+<ol class="org-ol">
+<li><a id="orgdf89763"></a><a href="#orgb3618bd">Virtual Private Cloud</a><br />
+<div class="outline-text-5" id="text-7-3-5-1">
+<ul class="org-ul">
+<li>select a VPC, default or custom</li>
+</ul>
+</div>
+</li>
+<li><a id="org78b02c4"></a>Network and <a href="#org266ab07">AWS Availability Zones</a><br />
+<div class="outline-text-5" id="text-7-3-5-2">
+<ul class="org-ul">
+<li>select one or let AWS select one for you</li>
+</ul>
+</div>
+</li>
+<li><a id="org3de3951"></a>auto assign public IPv4<br />
+<div class="outline-text-5" id="text-7-3-5-3">
+<ul class="org-ul">
+<li>pick IP address settings.</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-orgc56c2a5" class="outline-4">
+<h4 id="orgc56c2a5"><span class="section-number-4">7.3.6</span> configure storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="storage">storage</span></span></h4>
+<div class="outline-text-4" id="text-7-3-6">
+<ul class="org-ul">
+<li>root device is default</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org28f882f" class="outline-4">
+<h4 id="org28f882f"><span class="section-number-4">7.3.7</span> add tags</h4>
+<div class="outline-text-4" id="text-7-3-7">
+<ul class="org-ul">
+<li>add any tags relevant to this instance</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6f1dc81" class="outline-4">
+<h4 id="org6f1dc81"><span class="section-number-4">7.3.8</span> configure <a href="#org6c6d942">Security Group</a></h4>
+<div class="outline-text-4" id="text-7-3-8">
+<ul class="org-ul">
+<li>works similar to a firewall</li>
+<li>by default <span class="underline">ONLY</span> provides SSH
+<ul class="org-ul">
+<li>by default this gives SSH acess <span class="underline">publicly</span></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd0bfa33" class="outline-3">
+<h3 id="orgd0bfa33"><span class="section-number-3">7.4</span> exam tip&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></h3>
+<div class="outline-text-3" id="text-7-4">
+<ul class="org-ul">
+<li>billing <span class="underline">per second</span></li>
+<li><span class="underline">private</span> by default</li>
+<li>Availability Zone risilience, if the AZ fails the instance will fail</li>
+<li>storage used by default is local or <a href="#orgbafa29e">Elasitc Block Storage</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb508b38" class="outline-2">
+<h2 id="orgb508b38"><span class="section-number-2">8</span> storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="storage">storage</span></span></h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-orgbafa29e" class="outline-3">
+<h3 id="orgbafa29e"><span class="section-number-3">8.1</span> Elasitc Block Storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ebs">ebs</span></span></h3>
+</div>
+<div id="outline-container-orgddf8c27" class="outline-3">
+<h3 id="orgddf8c27"><span class="section-number-3">8.2</span> S3&#xa0;&#xa0;&#xa0;<span class="tag"><span class="s3">s3</span></span></h3>
+<div class="outline-text-3" id="text-8-2">
+<ul class="org-ul">
+<li>nearly infinitely scalable object storage, accessible from anywhere ( public )</li>
+<li>Good <span class="underline">default</span> storage solution</li>
+<li id="<span class="underline">Global</span> storage Platform"><span class="underline">regionally</span> based / resilient, see <a href="#org46958af">Service Resilience</a>
+<ul class="org-ul">
+<li>lives in specific region, stored here when unsed, does not leave unless configurd to</li>
+<li>can be accessed from anywhere</li>
+<li>data replicated across all <a href="#org266ab07">AWS Availability Zones</a> in that region</li>
+<li>can tolerate failure of an AZ</li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org7a3324d" class="outline-4">
+<h4 id="org7a3324d"><span class="section-number-4">8.2.1</span> data storage&#xa0;&#xa0;&#xa0;<span class="tag"><span class="data">data</span></span></h4>
+<div class="outline-text-4" id="text-8-2-1">
+<ul class="org-ul">
+<li>great for Media: movies audio photo and large data sets</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org09bba66" class="outline-4">
+<h4 id="org09bba66"><span class="section-number-4">8.2.2</span> access</h4>
+<div class="outline-text-4" id="text-8-2-2">
+<ul class="org-ul">
+<li>UI</li>
+<li>CLI</li>
+<li>API</li>
+<li>hTTP</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc16c193" class="outline-4">
+<h4 id="orgc16c193"><span class="section-number-4">8.2.3</span> Objects&#xa0;&#xa0;&#xa0;<span class="tag"><span class="object">object</span></span></h4>
+<div class="outline-text-4" id="text-8-2-3">
+<dl class="org-dl">
+<dt>data that S3 stores</dt><dd>the data talked about previously, etc. Files. see <a href="#org7a3324d">data storage</a></dd>
+</dl>
+</div>
+<ol class="org-ol">
+<li><a id="org4b52e97"></a>Object Key<br />
+<div class="outline-text-5" id="text-8-2-3-1">
+<ul class="org-ul">
+<li>Works with Keys (similar to a filename)</li>
+<li>this identifies an object in a bucket. <a href="#org4b52e97">Object Key</a> + <a href="#org9575da9">Buckets</a> == access to this <a href="#org1b04bc7">Object Value</a></li>
+</ul>
+</div>
+</li>
+<li><a id="org1b04bc7"></a>Object Value&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span><br />
+<div class="outline-text-5" id="text-8-2-3-2">
+<ul class="org-ul">
+<li>The content that is stored. <span class="underline">The maximum value is 5TB</span></li>
+</ul>
+</div>
+</li>
+<li><a id="org816318a"></a>Diagram<br />
+<div class="outline-text-5" id="text-8-2-3-3">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_143121_wxGcPe.png" alt="aws-general.org_20210301_143121_wxGcPe.png" />
+</p>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org9575da9" class="outline-4">
+<h4 id="org9575da9"><span class="section-number-4">8.2.4</span> Buckets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="bucket">bucket</span></span></h4>
+<div class="outline-text-4" id="text-8-2-4">
+<ul class="org-ul">
+<li>Holds your objects</li>
+<li><span class="underline">Buckets live in a specific region</span>
+<ul class="org-ul">
+<li>data does not leave unless configured to do so</li>
+</ul></li>
+<li><span class="underline">blast_<sub>radius</sub></span> is the <a href="#orgc2ed552">AWS Regions</a></li>
+<li>infintely scalable storage system</li>
+<li>flat structure</li>
+<li>No concept of filenames, keys only</li>
+<li>Folders are <span class="underline">prefixes</span> and part of the object name</li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org5ebabeb"></a>Diagram<br />
+<div class="outline-text-5" id="text-8-2-4-1">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_145321_dAZB0t.png" alt="aws-general.org_20210301_145321_dAZB0t.png" />
+</p>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org6ddfb93" class="outline-4">
+<h4 id="org6ddfb93"><span class="section-number-4">8.2.5</span> Patterns and Anti-patterns</h4>
+<div class="outline-text-4" id="text-8-2-5">
+<ul class="org-ul">
+<li>Object store <span class="underline">not</span> a file or block storage</li>
+<li>S3 has <span class="underline">no</span> filesystem</li>
+<li>cannot be mounted</li>
+<li>great for large scale and distribution</li>
+<li>good for <span class="underline">offload</span>, get data off an expensive EC2 instance and access it FROM <a href="#org37a0304">Elastic Compute Cloud</a></li>
+<li>Can take data from, or put it TO many products, S3 is a great default</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb03d5a4" class="outline-4">
+<h4 id="orgb03d5a4"><span class="section-number-4">8.2.6</span> Configuring an S3 Bucket&#xa0;&#xa0;&#xa0;<span class="tag"><span class="demo">demo</span></span></h4>
+<div class="outline-text-4" id="text-8-2-6">
+</div>
+<ol class="org-ol">
+<li><a id="org7bffb5a"></a>basics<br />
+<div class="outline-text-5" id="text-8-2-6-1">
+<ul class="org-ul">
+<li>select a name using naming restrictions, see <a href="#org6a8d42b">exam tips</a></li>
+<li>select AWS region</li>
+</ul>
+</div>
+</li>
+<li><a id="org4769b6d"></a>bucket settings<br />
+<div class="outline-text-5" id="text-8-2-6-2">
+<ul class="org-ul">
+<li>by default public access is blocked
+<ul class="org-ul">
+<li>giving public access does <span class="underline">not</span> mean anyone can access, further configuration is required to grant access</li>
+</ul></li>
+<li>only root user and anyone with access can use and see this bucket</li>
+</ul>
+</div>
+</li>
+<li><a id="org0a02a72"></a>access points<br /></li>
+<li><a id="org6a02f5a"></a>metrics<br /></li>
+<li><a id="org6247bd4"></a>properties<br /></li>
+<li><a id="orgc5017f7"></a>Removing S3 Storage<br />
+<ol class="org-ol">
+<li><a id="orgd7f3490"></a>Empty the bucket<br />
+<div class="outline-text-6" id="text-8-2-6-6-1">
+<ul class="org-ul">
+<li>from S3 select the bucket, select empty, type <code>permanently empty</code></li>
+</ul>
+</div>
+</li>
+<li><a id="org3d3e553"></a>delete the storage<br />
+<div class="outline-text-6" id="text-8-2-6-6-2">
+<ul class="org-ul">
+<li>From s3 select the bucket, click delte. type the bucket name and click delete bucket</li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div id="outline-container-org743d002" class="outline-4">
+<h4 id="org743d002"><span class="section-number-4">8.2.7</span> S3 Security&#xa0;&#xa0;&#xa0;<span class="tag"><span class="security">security</span></span></h4>
+<div class="outline-text-4" id="text-8-2-7">
+<ul class="org-ul">
+<li>Can utilize <a href="#orgaf983e8">Resource Policy</a> to allow anonymous access
+<ul class="org-ul">
+<li><p>
+example:
+</p>
+<div class="org-src-container">
+<pre class="src src-json">{ "Version": "2012-10-17",
+"Statement":[
+  {
+    "Sid": "PublicRead",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": ["s3:GetObject"],
+    "Resource": ["arn:aws:s3:::someproject/*"]
+  }
+ ]
+}
+</pre>
+</div></li>
+<li><p>
+bucket policy for blocking an IP:
+</p>
+
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210317_112505_LmoGJY.png" alt="aws-general.org_20210317_112505_LmoGJY.png" />
+</p>
+</div></li>
+<li><p>
+diagram of the same
+</p>
+
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210317_112149_iE8xQM.png" alt="aws-general.org_20210317_112149_iE8xQM.png" />
+</p>
+</div></li>
+</ul></li>
+<li>Block Public Access
+<ul class="org-ul">
+<li>another boundary in response to accidentally open policies. These apply <b>only</b> to anonymous identities, this can be used as an override or failsafe</li>
+</ul></li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org727bb95"></a>exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span><br />
+<div class="outline-text-5" id="text-8-2-7-1">
+<ul class="org-ul">
+<li><p>
+When to use an identity, policy, or acl
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Identity Policy</th>
+<th scope="col" class="org-left">Bucket (Resource) Policy</th>
+<th scope="col" class="org-left">acl</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Controlling different resources</td>
+<td class="org-left"><b>just</b> controlling a resource. ex: s3</td>
+<td class="org-left">never</td>
+</tr>
+
+<tr>
+<td class="org-left">Preference for <b>IAM</b></td>
+<td class="org-left"><b>anonymous</b> <span class="underline">or</span> <b>cross account</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Same account</b></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org0268622" class="outline-4">
+<h4 id="org0268622"><span class="section-number-4">8.2.8</span> exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h4>
+<div class="outline-text-4" id="text-8-2-8">
+<ul class="org-ul">
+<li>Bucket names must be <span class="underline">globally unique</span></li>
+<li><b>private by default</b>
+<ul class="org-ul">
+<li>only account root user will have access without explicit permission grant</li>
+</ul></li>
+<li id="names are">between 3 and 63 characters, all lowercase, no underscores</li>
+<li>must start with lowercase letter or a number</li>
+<li>cannot be IP formatted</li>
+<li id="Limit"><span class="underline">100 soft limit, 1000 hard limit</span>
+<dl class="org-dl">
+<dt>soft limit</dt><dd>can be added by the user</dd>
+<dt>hard limit</dt><dd>must contact AWS support</dd>
+<dt>(no term)</dt><dd><span class="underline">Important if you are trying to allocate buckets per user.</span></dd>
+<dt>(no term)</dt><dd>Bucket <span class="underline">CAN</span> use prefixes set for users</dd>
+</dl></li>
+<li>Unlimited objects, sizes between <span class="underline">0 bytes and 5TB</span></li>
+<li><span class="underline">key = name, value = data</span></li>
+<li id="S3 Storage">is a <b>public</b> service and holds <b>objects</b>, <span class="underline">not</span> block storage, with <b>unlimited</b> amount of data</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org4627587" class="outline-2">
+<h2 id="org4627587"><span class="section-number-2">9</span> Cloud Formation&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cfn">cfn</span>&#xa0;<span class="cloud_formation">cloud_formation</span></span></h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li>can be used for
+<ul class="org-ul">
+<li>automation</li>
+<li>change management</li>
+<li>one-off creations</li>
+<li>consistent</li>
+<li>portable</li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-orgd8bedf0" class="outline-3">
+<h3 id="orgd8bedf0"><span class="section-number-3">9.1</span> Concets&#xa0;&#xa0;&#xa0;<span class="tag"><span class="concepts">concepts</span></span></h3>
+<div class="outline-text-3" id="text-9-1">
+<ul class="org-ul">
+<li>update, delete, create resources via templates</li>
+<li>Infrastructure as code</li>
+<li>written in <span class="underline">JSON</span> or <span class="underline">YAML</span></li>
+<li>Templates create a <a href="#orgb5ab371">stack</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org07c4995" class="outline-3">
+<h3 id="org07c4995"><span class="section-number-3">9.2</span> Template&#xa0;&#xa0;&#xa0;<span class="tag"><span class="template">template</span></span></h3>
+<div class="outline-text-3" id="text-9-2">
+</div>
+<div id="outline-container-org06a0167" class="outline-4">
+<h4 id="org06a0167"><span class="section-number-4">9.2.1</span> resouces&#xa0;&#xa0;&#xa0;<span class="tag"><span class="resouces">resouces</span></span></h4>
+<div class="outline-text-4" id="text-9-2-1">
+<ul class="org-ul">
+<li>this field is the <span class="underline">only</span> mandatory field</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd6deef2" class="outline-4">
+<h4 id="orgd6deef2"><span class="section-number-4">9.2.2</span> description</h4>
+<div class="outline-text-4" id="text-9-2-2">
+<ul class="org-ul">
+<li>a description of the template, what it does / resources / costs / etc.</li>
+<li>if a AWSTemplateFormatVersion is included, the description <span class="underline">MUST</span> be after this</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2362d11" class="outline-4">
+<h4 id="org2362d11"><span class="section-number-4">9.2.3</span> metadata</h4>
+<div class="outline-text-4" id="text-9-2-3">
+<ul class="org-ul">
+<li>can control UI</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd4467ee" class="outline-4">
+<h4 id="orgd4467ee"><span class="section-number-4">9.2.4</span> parameters</h4>
+<div class="outline-text-4" id="text-9-2-4">
+<ul class="org-ul">
+<li>prompt the user for more information</li>
+<li>ex:
+<ul class="org-ul">
+<li>number of AZs, names, sizes, etc</li>
+</ul></li>
+<li>can provide default values or even selection box</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfa94d08" class="outline-4">
+<h4 id="orgfa94d08"><span class="section-number-4">9.2.5</span> mappings</h4>
+<div class="outline-text-4" id="text-9-2-5">
+<ul class="org-ul">
+<li>create lookup tables</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org003343d" class="outline-4">
+<h4 id="org003343d"><span class="section-number-4">9.2.6</span> conditions</h4>
+<div class="outline-text-4" id="text-9-2-6">
+<ul class="org-ul">
+<li>things that will only occur when a condition is met.</li>
+<li>two setup process:
+<ul class="org-ul">
+<li>conditions</li>
+<li>results (use the condition)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org426c6a5" class="outline-4">
+<h4 id="org426c6a5"><span class="section-number-4">9.2.7</span> output</h4>
+<div class="outline-text-4" id="text-9-2-7">
+<ul class="org-ul">
+<li>what is presented after something is the tempate is run</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org411c3dd" class="outline-3">
+<h3 id="org411c3dd"><span class="section-number-3">9.3</span> Diagram</h3>
+<div class="outline-text-3" id="text-9-3">
+</div>
+<div id="outline-container-orgb5192e8" class="outline-4">
+<h4 id="orgb5192e8"><span class="section-number-4">9.3.1</span> stack creation from template</h4>
+<div class="outline-text-4" id="text-9-3-1">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_161226_u24rgM.png" alt="aws-general.org_20210301_161226_u24rgM.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org002b6b1" class="outline-4">
+<h4 id="org002b6b1"><span class="section-number-4">9.3.2</span> stack update from template</h4>
+<div class="outline-text-4" id="text-9-3-2">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_161346_4ZxmOk.png" alt="aws-general.org_20210301_161346_4ZxmOk.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb5ab371" class="outline-3">
+<h3 id="orgb5ab371"><span class="section-number-3">9.4</span> stack</h3>
+<div class="outline-text-3" id="text-9-4">
+<ul class="org-ul">
+<li>physical living resources created from a <a href="#org07c4995">Template</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7cc6556" class="outline-3">
+<h3 id="org7cc6556"><span class="section-number-3">9.5</span> Configuring CFN&#xa0;&#xa0;&#xa0;<span class="tag"><span class="configure">configure</span>&#xa0;<span class="example">example</span></span></h3>
+<div class="outline-text-3" id="text-9-5">
+<ul class="org-ul">
+<li>Needs a template (YML or JSON)</li>
+</ul>
+</div>
+<div id="outline-container-org80d51c8" class="outline-4">
+<h4 id="org80d51c8"><span class="section-number-4">9.5.1</span> Must first create a stack</h4>
+<div class="outline-text-4" id="text-9-5-1">
+<ul class="org-ul">
+<li>Prerequisites
+<ul class="org-ul">
+<li>template ready</li>
+<li>sample</li>
+<li>create</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org4fa5b82" class="outline-3">
+<h3 id="org4fa5b82"><span class="section-number-3">9.6</span> Session Manager&#xa0;&#xa0;&#xa0;<span class="tag"><span class="session_manager">session_manager</span></span></h3>
+<div class="outline-text-3" id="text-9-6">
+<ul class="org-ul">
+<li>must be defined within the template to be used</li>
+<li>Session manager is away of connecting to an EC2 instance without using SSH ( or RDP ? more info needed ) through the webUI</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfda237d" class="outline-3">
+<h3 id="orgfda237d"><span class="section-number-3">9.7</span> exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h3>
+<div class="outline-text-3" id="text-9-7">
+<ul class="org-ul">
+<li>if a AWSTemplateFormatVersion is included, the description <span class="underline">MUST</span> be after this</li>
+<li id="cloudformation logical resource">is a resource defined in a cloudformation template</li>
+<li id="cloudformation physical resource">physical resource created by creating a CF stack</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org4f19c9d" class="outline-2">
+<h2 id="org4f19c9d"><span class="section-number-2">10</span> Cloud Watch&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cloudwatch">cloudwatch</span></span></h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li>operational management and monitoring</li>
+</ul>
+</div>
+<div id="outline-container-org8757a55" class="outline-3">
+<h3 id="org8757a55"><span class="section-number-3">10.1</span> Collects and manages operational data</h3>
+<div class="outline-text-3" id="text-10-1">
+<ul class="org-ul">
+<li>data about how something runs, logs, etc.</li>
+<li><b>public service</b>
+<ul class="org-ul">
+<li>can be used across clouds, see <a href="#org3159e92">Multicloud</a> or <a href="#org20e25a5">Hybridcloud</a>, etc</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org88ed3c1" class="outline-3">
+<h3 id="org88ed3c1"><span class="section-number-3">10.2</span> metrics&#xa0;&#xa0;&#xa0;<span class="tag"><span class="metrics">metrics</span></span></h3>
+<div class="outline-text-3" id="text-10-2">
+<ul class="org-ul">
+<li>data relating to aws products, apps, on-prem</li>
+<li>disk space, number of visitors, etc.</li>
+<li>interfaces:
+<ul class="org-ul">
+<li>api , ui, etc</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgae733b0" class="outline-3">
+<h3 id="orgae733b0"><span class="section-number-3">10.3</span> Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span>&#xa0;<span class="media">media</span></span></h3>
+<div class="outline-text-3" id="text-10-3">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210302_132252_LpNL41.png" alt="aws-general.org_20210302_132252_LpNL41.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4910ae6" class="outline-3">
+<h3 id="org4910ae6"><span class="section-number-3">10.4</span> Namespace</h3>
+<div class="outline-text-3" id="text-10-4">
+<ul class="org-ul">
+<li>a container, how to keep things within a ruleset</li>
+<li>All data goes into a AWS Namespace, done by default</li>
+<li>contains <a href="#org6a02f5a">metrics</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5fdf35e" class="outline-3">
+<h3 id="org5fdf35e"><span class="section-number-3">10.5</span> Datapoint</h3>
+<div class="outline-text-3" id="text-10-5">
+<ul class="org-ul">
+<li>measurepoints of metrics</li>
+<li>consists of:
+<ul class="org-ul">
+<li>timestamp</li>
+<li>value</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3d5b52c" class="outline-3">
+<h3 id="org3d5b52c"><span class="section-number-3">10.6</span> Dimensions</h3>
+<div class="outline-text-3" id="text-10-6">
+<ul class="org-ul">
+<li>name value pairs sent in with data points to a CloudWatch namespace for a metric. An example is:
+<ul class="org-ul">
+<li>Name=InstanceID, Value=i-xxxxxx</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgaee9619" class="outline-3">
+<h3 id="orgaee9619"><span class="section-number-3">10.7</span> Alarms</h3>
+<div class="outline-text-3" id="text-10-7">
+<ul class="org-ul">
+<li>Linked to a metric to take an action based on a Metric with two states, OK and ALARM, or INSUFFICIENT DATA ( still gathering )</li>
+<li id="OK">Everything is good or as expected</li>
+<li id="ALARM">An Alarm event is triggered when something is NOT correct
+<dl class="org-dl">
+<dt>SNS</dt><dd>Send a notification</dd>
+<dt>Action</dt><dd>Excecute something to correct the alarm condition</dd>
+</dl></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3ce4f38" class="outline-3">
+<h3 id="org3ce4f38"><span class="section-number-3">10.8</span> Configuration</h3>
+</div>
+<div id="outline-container-org945a1ac" class="outline-3">
+<h3 id="org945a1ac"><span class="section-number-3">10.9</span> Logs&#xa0;&#xa0;&#xa0;<span class="tag"><span class="logs">logs</span></span></h3>
+<div class="outline-text-3" id="text-10-9">
+<ul class="org-ul">
+<li>integrates with
+<ul class="org-ul">
+<li>ec2, vpc, lambda, cloudtrail, r53, etc</li>
+</ul></li>
+<li>Store, monitor and access logging data</li>
+<li>Public service, useable from AWS or on-prem</li>
+<li>Able to generate metrics based on logs via <b>metric filter</b> which you can then set up alarms, etc, based on metrics</li>
+<li>Stored into log streams, each log stream is an instance of one log for one instance.
+<ul class="org-ul">
+<li>Example: <code>/var/log/messages</code> for an <b>EC2</b> instance is one log stream</li>
+</ul></li>
+<li>Log groups can contain many log streams
+<ul class="org-ul">
+<li>Example: <code>/var/log/messages</code> across several <b>EC2</b> instances</li>
+</ul></li>
+</ul>
+</div>
+<div id="outline-container-org47c74ce" class="outline-4">
+<h4 id="org47c74ce"><span class="section-number-4">10.9.1</span> Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></h4>
+<div class="outline-text-4" id="text-10-9-1">
+
+<div class="figure">
+<p><img src="file:///Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_195108_zKfDyG.png" alt="aws-general.org_20210315_195108_zKfDyG.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org96ef941" class="outline-2">
+<h2 id="org96ef941"><span class="section-number-2">11</span> Cloud Trail&#xa0;&#xa0;&#xa0;<span class="tag"><span class="cloudtrail">cloudtrail</span></span></h2>
+<div class="outline-text-2" id="text-11">
+<dl class="org-dl">
+<dt>CloudTrail Event</dt><dd>Actions in AWS are logged in CloudTrail via API calls. these actions can be from services, users, etc.Cloudtrail are regional services, but you can set a trail to <b>&ldquo;One Region&rdquo;</b> or <b>&ldquo;All Regions&rdquo;</b>. The bonus to all regions are if AWS adds new regions, they are automatically included. Global Service events go to US East 1.
+<ul class="org-ul">
+<li>default 90 days event history, but can be stored in an <a href="#orgddf8c27">S3</a> bucket which can be stored indefintely. Stored as compressed on JSON</li>
+<li>free by default</li>
+<li>stored and can be viewed in JSON</li>
+<li>This data can be stored into <a href="#org4f19c9d">Cloud Watch</a> for easier viewing/useage</li>
+<li>Events are either: <b>management events</b> or <b>data events</b>
+<ul class="org-ul">
+<li>management events: creating ec2, etc</li>
+<li>data events: actions to s3 objects, etc. <b>not</b> enabled by default</li>
+</ul></li>
+</ul></dd>
+<dt>Organizational Trails</dt><dd>MUST be set up from the Organization management account.</dd>
+<dt>Individual Trails</dt><dd>can be setup by individual accounts</dd>
+</dl>
+</div>
+<div id="outline-container-org4341833" class="outline-3">
+<h3 id="org4341833"><span class="section-number-3">11.1</span> CloudTrail Creation</h3>
+<div class="outline-text-3" id="text-11-1">
+<ul class="org-ul">
+<li>When creating a trail thereis an option that must be ticked to enable for all accounts within the <a href="#orgec6bdd8">AWS Organizations</a>. SNS can also be configured during trail creation</li>
+<li><a href="#org4f19c9d">Cloud Watch</a> can also be configured during setup.
+<ul class="org-ul">
+<li>can perform searches, history, event history processes, etc. Further log functionality.</li>
+<li>events can cause other things to happen.</li>
+</ul></li>
+<li>A role will have to be created for CloudTrail to interact with other services
+<ul class="org-ul">
+<li>doing so creates a policy document to alloud cloudtrail to interact with cloudwatch logs</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org61c5df4" class="outline-3">
+<h3 id="org61c5df4"><span class="section-number-3">11.2</span> Pricing</h3>
+<div class="outline-text-3" id="text-11-2">
+<ul class="org-ul">
+<li>90 Day history is free by default</li>
+<li>1 copy (Trail) of management events free in every region, in each account, is free.
+<ul class="org-ul">
+<li>additional copies (trails) of management events are 2.00 per 100,00 events.</li>
+<li>data events are 0.10 per 100,000 events, irrespective of how many trails you have, anytime data trails are enabled</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7e3e478" class="outline-3">
+<h3 id="org7e3e478"><span class="section-number-3">11.3</span> exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h3>
+<div class="outline-text-3" id="text-11-3">
+<ul class="org-ul">
+<li>enabled by default for <b>90</b> days, no <b>s3</b></li>
+<li><b>trails</b> are how you configure for <b>s3</b> and <b>cloudwatch</b> logs</li>
+<li><b>management</b> events <b>only</b> be default, <b>not</b> data. <b>data</b> must be enabled individually</li>
+<li><b>global service events</b> log to US EAST 1, trail <b>must</b> be enabled to capture, these are <b>IAM, STS, CloudFront</b></li>
+<li>cloudtrail is <b>not</b> realtime, thereis a delay of around 15 minutes</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7c38204" class="outline-2">
+<h2 id="org7c38204"><span class="section-number-2">12</span> Site Format Example ( for reference )</h2>
+<div class="outline-text-2" id="text-12">
+<ul class="org-ul">
+<li>Broad / general tips and info about the heading</li>
+</ul>
+</div>
+<div id="outline-container-org1020365" class="outline-3">
+<h3 id="org1020365"><span class="section-number-3">12.1</span> References</h3>
+<div class="outline-text-3" id="text-12-1">
+<ul class="org-ul">
+<li>URLS go here that relate to the top heading</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc5ef5d5" class="outline-3">
+<h3 id="orgc5ef5d5"><span class="section-number-3">12.2</span> Sample: Idea / Subcategory</h3>
+<div class="outline-text-3" id="text-12-2">
+<dl class="org-dl">
+<dt>item</dt><dd>definition <code>related code</code> <span class="underline">important keyword</span></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orgb492854" class="outline-3">
+<h3 id="orgb492854"><span class="section-number-3">12.3</span> Tags Used:</h3>
+<div class="outline-text-3" id="text-12-3">
+<dl class="org-dl">
+<dt>exam<sub>tip</sub></dt><dd>when something is highlighted or designated as a tip</dd>
+<dt>reference</dt><dd></dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-org2bea345" class="outline-2">
+<h2 id="org2bea345"><span class="section-number-2">13</span> Shared Responsibility Model</h2>
+<div class="outline-text-2" id="text-13">
+</div>
+<div id="outline-container-orgd2093bc" class="outline-3">
+<h3 id="orgd2093bc"><span class="section-number-3">13.1</span> Security</h3>
+<div class="outline-text-3" id="text-13-1">
+<dl class="org-dl">
+<dt>AWS Responsibility</dt><dd>for the cloud
+<ul class="org-ul">
+<li>client side encryption, auth, server-side encryption, net traffic</li>
+<li>OS, local FW</li>
+<li>Application identity and access mgmt</li>
+<li><b>CUSTOMER DATA</b> : secured, backed up, etc</li>
+</ul></dd>
+<dt>Customer Responsibility</dt><dd>security in the cloud
+<ul class="org-ul">
+<li>hardware, global infra</li>
+<li>computer, storage, db, net, AZ, edge, regions</li>
+<li>software which provides the above</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org1de77a4" class="outline-3">
+<h3 id="org1de77a4"><span class="section-number-3">13.2</span> Diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></h3>
+<div class="outline-text-3" id="text-13-2">
+
+<div class="figure">
+<p><img src="./images/screenshot-05.png" alt="screenshot-05.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8a60f1b" class="outline-2">
+<h2 id="org8a60f1b"><span class="section-number-2">14</span> High Availability, Fault Taulerance, Disaster Recovery&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ha">ha</span>&#xa0;<span class="fault_tolerance">fault_tolerance</span>&#xa0;<span class="dr">dr</span></span></h2>
+<div class="outline-text-2" id="text-14">
+<dl class="org-dl">
+<dt>High Availability</dt><dd>aims to ensure agreed level of Ops performance (uptime, etc) for a higher than normal period
+<ul class="org-ul">
+<li>online as often as possible</li>
+<li>usually measured as a percentage of uptime</li>
+<li>99.9% is referred to as (three 9s), 8.77 hours downtime per year</li>
+<li>About minimixing outage, maximixing uptime. HA is <b>not</b> losing sesseion, etc</li>
+</ul></dd>
+<dt>Fault Tolerance</dt><dd>much more than HA, something that enables a system to continue operating <span class="underline">properly</span> in event of failure of some (at last one) of it&rsquo;s components <b>no customer impact</b>
+<ul class="org-ul">
+<li>when HA is <span class="underline">not</span> enough</li>
+<li>example would be an active - active solution</li>
+<li>routing sessions <b>around</b> a failure in one system</li>
+<li>example : an airplane with duplicate, 2x more engines than needed</li>
+</ul></dd>
+<dt>Disaster Recovery</dt><dd>set of policies, tools, procedures to enable recovery in a disaster situation
+<dl class="org-dl">
+<dt>pre planning</dt><dd>plan FOR a disaster</dd>
+<dt>DR Process</dt><dd>plan during an disaster</dd>
+<dt>(no term)</dt><dd>copies of process <span class="underline">AND</span> data</dd>
+</dl></dd>
+</dl>
+</div>
+<div id="outline-container-orgff6f543" class="outline-3">
+<h3 id="orgff6f543"><span class="section-number-3">14.1</span> Summary&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tip">exam_tip</span></span></h3>
+<div class="outline-text-3" id="text-14-1">
+<dl class="org-dl">
+<dt>HA</dt><dd>Minimize any outages</dd>
+<dt>Fault Tolerance</dt><dd>operate THROUGH a fault</dd>
+<dt>Disaster Recover</dt><dd>how to recover when HA and FT fails</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf9450c3" class="outline-2">
+<h2 id="orgf9450c3"><span class="section-number-2">15</span> DNS&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dns">dns</span></span></h2>
+<div class="outline-text-2" id="text-15">
+<dl class="org-dl">
+<dt>DNS</dt><dd>is a <span class="underline">discovery service</span>, translating machine into human and human into machine. IPs to Names and Names to IPs</dd>
+</dl>
+</div>
+<div id="outline-container-orga5de484" class="outline-3">
+<h3 id="orga5de484"><span class="section-number-3">15.1</span> zone</h3>
+<div class="outline-text-3" id="text-15-1">
+<ul class="org-ul">
+<li>stored in zone files, served by NameServers
+<ul class="org-ul">
+<li>zone files hold DNS records</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf15da16" class="outline-3">
+<h3 id="orgf15da16"><span class="section-number-3">15.2</span> resolver</h3>
+<div class="outline-text-3" id="text-15-2">
+<ul class="org-ul">
+<li>finds a nameserver</li>
+<li id="root hints">pointer to the DNS root server
+<ul class="org-ul">
+<li>ISP or Router can hold this</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org73c2909" class="outline-3">
+<h3 id="org73c2909"><span class="section-number-3">15.3</span> terms</h3>
+<div class="outline-text-3" id="text-15-3">
+<dl class="org-dl">
+<dt>dns client</dt><dd>what device wants an address of a server
+<dl class="org-dl">
+<dt>examples</dt><dd>laptop, phone, pc, IOT, etc</dd>
+</dl></dd>
+<dt>resolver-</dt><dd>software on device or server which makes DNS queries for client on it&rsquo;s behalf</dd>
+<dt>Zone</dt><dd>part of the DNS database database
+<dl class="org-dl">
+<dt>examples</dt><dd>amazon.com</dd>
+</dl></dd>
+<dt>ZoneFile</dt><dd>what the data is
+<dl class="org-dl">
+<dt>examples</dt><dd>records</dd>
+</dl></dd>
+<dt>Nameserver</dt><dd>where zonefiles are hosted</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org755e388" class="outline-3">
+<h3 id="org755e388"><span class="section-number-3">15.4</span> authorization</h3>
+<div class="outline-text-3" id="text-15-4">
+<ul class="org-ul">
+<li><b>trusted</b>
+<ul class="org-ul">
+<li>trust is passed, ex: .com root zone can trust amazon.com</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org926672a" class="outline-3">
+<h3 id="org926672a"><span class="section-number-3">15.5</span> TLD</h3>
+<div class="outline-text-3" id="text-15-5">
+<dl class="org-dl">
+<dt>top level domains</dt><dd>live in root zones</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org79640dc" class="outline-3">
+<h3 id="org79640dc"><span class="section-number-3">15.6</span> process of DNS</h3>
+<div class="outline-text-3" id="text-15-6">
+<ol class="org-ol">
+<li>configured resolver must:
+a. DNS Client asks a resolver for the IP of a given DNS Name
+b. DNS resolver communicates with one or more root server to acces the root zone, using root hints file, to begin finding the IP address.
+<dl class="org-dl">
+<dt>This is managed by IANA</dt><dd>IANA controls the root zone</dd>
+<dt>Trust/Authoritative</dt><dd>where trust lies between client and server. client can trust root by default, which trusts it&rsquo;s ( ?branches? name for this? )</dd>
+</dl></li>
+<li>find nameserver which hosts a zonefile</li>
+<li>query that nameserver for a record inside that zonefile</li>
+<li>pass this information back to the dns client</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgbd05d3a" class="outline-3">
+<h3 id="orgbd05d3a"><span class="section-number-3">15.7</span> process attempt 2</h3>
+<div class="outline-text-3" id="text-15-7">
+<ol class="org-ol">
+<li>Client needs an IP from a Name, say www.amazon.com.</li>
+<li>Client uses resolver in ISP.</li>
+<li>Resolver uses root hints file to communicate with  DNS root server and asks for www.amazon.com</li>
+<li>Root server nameservers does <span class="underline">NOT</span> have www.amazon.com, but they do know who has .com. servers and passes authorization here</li>
+<li>resolver talks to nameservers at .com., asks for www.amazon.com. Only authoritative for .com., does <span class="underline">NOT</span> have www.amazon.com. but <span class="underline">does</span> have amazon.com. because it was delegated that right when domain was registered, returns nameservers for amazon.com.</li>
+<li>resolver talks to amazon.com. nameservers, requests for www.amazon.com.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgf42e0ff" class="outline-3">
+<h3 id="orgf42e0ff"><span class="section-number-3">15.8</span> IANA</h3>
+<div class="outline-text-3" id="text-15-8">
+<ul class="org-ul">
+<li>does not own data, but knows <b>WHERE</b> to delegate to</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd47b8a2" class="outline-3">
+<h3 id="orgd47b8a2"><span class="section-number-3">15.9</span> distributed</h3>
+<div class="outline-text-3" id="text-15-9">
+<ul class="org-ul">
+<li>zone files stored on nameservers globally</li>
+</ul>
+</div>
+<div id="outline-container-org23f33f3" class="outline-4">
+<h4 id="org23f33f3"><span class="section-number-4">15.9.1</span> DNS Root</h4>
+<div class="outline-text-4" id="text-15-9-1">
+<dl class="org-dl">
+<dt>Domain Name</dt><dd>Domains are read right to left, seperated by a period
+<dl class="org-dl">
+<dt>example</dt><dd>www.amazon.com*.*</dd>
+</dl></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org7cfb9df" class="outline-4">
+<h4 id="org7cfb9df"><span class="section-number-4">15.9.2</span> root servers</h4>
+<div class="outline-text-4" id="text-15-9-2">
+<ul class="org-ul">
+<li>13 servers with databases ran by 12 different large global companies</li>
+<li>they only manage the servers, not the database</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org5838d86" class="outline-3">
+<h3 id="org5838d86"><span class="section-number-3">15.10</span> DNS Records&#xa0;&#xa0;&#xa0;<span class="tag"><span class="dns_records">dns_records</span></span></h3>
+<div class="outline-text-3" id="text-15-10">
+</div>
+<div id="outline-container-org8eac4a9" class="outline-4">
+<h4 id="org8eac4a9"><span class="section-number-4">15.10.1</span> NS Records&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ns">ns</span></span></h4>
+<div class="outline-text-4" id="text-15-10-1">
+<dl class="org-dl">
+<dt>.com.</dt><dd>managed by verisign
+<ul class="org-ul">
+<li>holds many NS records for amazon.com
+<ul class="org-ul">
+<li>point to servers managed by amazon.com team, where amazon.com zone lives</li>
+</ul></li>
+</ul></dd>
+<dt>amazon.com</dt><dd>manages all *.amazon.com records</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-orge531e68" class="outline-4">
+<h4 id="orge531e68"><span class="section-number-4">15.10.2</span> Record Types</h4>
+<div class="outline-text-4" id="text-15-10-2">
+<dl class="org-dl">
+<dt>A and AAAA Record</dt><dd>hostnames mapping to IP
+<dl class="org-dl">
+<dt>A record</dt><dd>ipv4</dd>
+<dt>AAAA</dt><dd>ipv6</dd>
+</dl></dd>
+<dt>Cname</dt><dd>canonical, host to host records</dd>
+<dt>MX</dt><dd>Mail
+<dl class="org-dl">
+<dt>priority</dt><dd></dd>
+
+<dt>value</dt><dd>can be a host
+<dl class="org-dl">
+<dt>ex</dt><dd>mail (mail.google.com) or mail.other. &lt;&#x2013; FQDN</dd>
+</dl></dd>
+<dt>(no term)</dt><dd>Diagram
+<img src="./images/screenshot-10.png" alt="screenshot-10.png" /></dd>
+</dl></dd>
+<dt>TXT</dt><dd>Abritrary records for extended functionality
+<ul class="org-ul">
+<li>often used to verify ownership</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="outline-container-org3b0142c" class="outline-3">
+<h3 id="org3b0142c"><span class="section-number-3">15.11</span> TTL&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ttl">ttl</span></span></h3>
+<div class="outline-text-3" id="text-15-11">
+<dl class="org-dl">
+<dt>ttl</dt><dd>numeric value set in seconds</dd>
+<dt>(no term)</dt><dd>how long to hold or cache a record, how long a resolver should hold a record</dd>
+<dt>(no term)</dt><dd>often a cause of failure in projects, if an upcoming change or project is happening that includes DNS changes, lower TTL days or more in advance</dd>
+</dl>
+</div>
+<div id="outline-container-org5927d19" class="outline-4">
+<h4 id="org5927d19"><span class="section-number-4">15.11.1</span> diagram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></h4>
+<div class="outline-text-4" id="text-15-11-1">
+
+<div class="figure">
+<p><img src="./images/screenshot-11.png" alt="screenshot-11.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org9d7d8a5" class="outline-3">
+<h3 id="org9d7d8a5"><span class="section-number-3">15.12</span> diagrams&#xa0;&#xa0;&#xa0;<span class="tag"><span class="diagram">diagram</span></span></h3>
+<div class="outline-text-3" id="text-15-12">
+</div>
+<div id="outline-container-orgbbc524e" class="outline-4">
+<h4 id="orgbbc524e"><span class="section-number-4">15.12.1</span> Heirarchy</h4>
+<div class="outline-text-4" id="text-15-12-1">
+
+<div class="figure">
+<p><img src="./images/screenshot-07.png" alt="screenshot-07.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5b3aed7" class="outline-4">
+<h4 id="org5b3aed7"><span class="section-number-4">15.12.2</span> Resolution</h4>
+<div class="outline-text-4" id="text-15-12-2">
+
+<div class="figure">
+<p><img src="./images/screenshot-08.png" alt="screenshot-08.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgad86b8f" class="outline-3">
+<h3 id="orgad86b8f"><span class="section-number-3">15.13</span> exam tips&#xa0;&#xa0;&#xa0;<span class="tag"><span class="exam_tips">exam_tips</span></span></h3>
+<div class="outline-text-3" id="text-15-13">
+<ul class="org-ul">
+<li><p>
+config that points at the root servers IP and address:
+</p>
+<details>
+root hints
+</details></li>
+<li><p>
+Hosts the DNS root zone:
+</p>
+<details>
+root servers
+</details></li>
+<li><p>
+points at TLD authoritative servers
+</p>
+ <details>
+root zone
+ </details></li>
+<li>gTLD : Generic Toplevel domain</li>
+<li>ccTLD : country-code top level domain</li>
+<li><p>
+Number of DNS Root Servers
+</p>
+<details>
+13
+</details></li>
+<li><p>
+Number of organizations that manager the DNS Root Servers
+</p>
+<details>
+12
+</details></li>
+<li><p>
+DNS Root Zone is managed by
+</p>
+<details>
+IANA
+</details></li>
+<li><p>
+The record type that is how a root zone delegates control of org to the org registry
+</p>
+<details>
+NS
+</details></li>
+<li><p>
+Org that maintains zones for a TLD
+</p>
+<details>
+registry
+</details></li>
+<li><p>
+Org that has relationships with the .org TLD zone mgr allowing TLD registration
+</p>
+<details>
+Registrar
+</details></li>
+<li><p>
+Number of subnets in a default VPC
+</p>
+<details>
+equal to the number of AZs in the region the VPC is located
+</details></li>
+<li><p>
+IP CIDR of a default VPC
+</p>
+<details>
+172.31.0.0/16
+</details></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1be1688" class="outline-2">
+<h2 id="org1be1688"><span class="section-number-2">16</span> route 53&#xa0;&#xa0;&#xa0;<span class="tag"><span class="route53">route53</span></span></h2>
+<div class="outline-text-2" id="text-16">
+<dl class="org-dl">
+<dt>route 53</dt><dd>global service, single database
+<ul class="org-ul">
+<li>similar to IAM?</li>
+<li>globally resilient</li>
+</ul></dd>
+</dl>
+</div>
+<div id="outline-container-org2c9ed2f" class="outline-3">
+<h3 id="org2c9ed2f"><span class="section-number-3">16.1</span> domain registry</h3>
+<div class="outline-text-3" id="text-16-1">
+<dl class="org-dl">
+<dt>registries</dt><dd>has relationship with main registries
+<dl class="org-dl">
+<dt>examples</dt><dd>.com, .io, .net</dd>
+</dl></dd>
+<dt>(no term)</dt><dd>how R53 works for registration
+<ul class="org-ul">
+<li>check with TLD for domain</li>
+<li>creates a zonefile for the new domain, called a <span class="underline">hosted zone</span></li>
+<li>puts this file on four managed nameservers</li>
+<li>communicates with .org registry -&gt; PIR and adds these NS records for the .ORG TLD using Name server records</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org0ae6648" class="outline-3">
+<h3 id="org0ae6648"><span class="section-number-3">16.2</span> Hosted Zones&#xa0;&#xa0;&#xa0;<span class="tag"><span class="hosted_zones">hosted_zones</span></span></h3>
+<div class="outline-text-3" id="text-16-2">
+<dl class="org-dl">
+<dt>hosted zones</dt><dd>DNS as a service, create and manage zone files <span class="underline">( hosted zones )</span></dd>
+<dt>hosted zones</dt><dd>can be
+<dl class="org-dl">
+<dt>public</dt><dd>internet</dd>
+<dt>private</dt><dd>linked to VPC</dd>
+</dl></dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-org2349c73" class="outline-3">
+<h3 id="org2349c73"><span class="section-number-3">16.3</span> Diagram</h3>
+<div class="outline-text-3" id="text-16-3">
+</div>
+<div id="outline-container-org43f7dee" class="outline-4">
+<h4 id="org43f7dee"><span class="section-number-4">16.3.1</span> Registration</h4>
+<div class="outline-text-4" id="text-16-3-1">
+
+<div class="figure">
+<p><img src="./images/screenshot-09.png" alt="screenshot-09.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8dc4a21" class="outline-3">
+<h3 id="org8dc4a21"><span class="section-number-3">16.4</span> host zone files on nameservers</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: edward</p>
+<p class="date">Created: 2021-03-17 Wed 11:40</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,8 @@
+#+TITLE: Animals4life
+
+* Scenario
+** fast performance for all field workers
+** able to deploy into ~new regions quickly~ when required
+** ~low cost~ & ~scalable~ base infrastructure
+** ~agility~ - spin up new marketing campaigns, social  and progress ive apps: ~iot~ ~big data~ etc
+** ~automation~ - low base staffing costs

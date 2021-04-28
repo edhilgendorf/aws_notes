@@ -1,0 +1,854 @@
+#+TITLE: Aws General
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+** AWS Accounts :aws:account:
++ Containers for Identities and Resources
++ Must have unique email address, this is the [[*Root User][Root User]]
+*** Account Creation / best practices :creation:
+- General/Master account are the same.
+- [[*Root User][Root User]] is within this Master account and created upon creatin of master account.
+  - Root user has full access of this entire account.
+*** MFA :: Multi Factor Authentication :mfa:
+- Generates a code that changes periodically
+*** IAM :: Identity and Access Management :iam:
+- By default no permissions
+- Comes with AWS accounts by default. Provided Free, no cost.
+- attached to identities such as
+  + iam users, iam groups, iam roles
+- Globally resilient service, data secure across ALL AWS regions
+**** Create other ~identities~ inside the root account :identity:
+***** roles :roles:
+- Is a real identity, can be referenced within a resource policy
+- Existing on-prem identities can be assigned roles when *using single sign on* _or_ *there are more than 5000 existing identities*
+- Temporary credentials are assigned via STS for roles
+- *When to use a role*
+  - unknown number of users/apps access, OR over 5000 uses
+- *Can be Temporary*
+  + When something temporarily needs to do something, then stops, *borrowing permissions for a short time*
+****** Attachable [[*Policies][Policies]] :policy:
+******* Trust Policy :trust:
+- Controls which identities can assume the role
+- Can reference identities in this and other AWS accounts
+- Can reference even Facebook, Twitter, etc.
+- Can be time limited
+******* Permissions Policy :permissions:
+****** [[*Lambda][Lambda]] Execution Roles :lambda:
+- Has permissions policy via role to use AWS functions/services
+- Uses ~sts:AssumeRole~ to access AWS resources based on whatever the Role has. The runtime environment gets these credentials.
+- Without Roles for Lambda you would have to hard key keys and permissions.
+****** Break Glass Key
+- Made for emergency to provide different permissions to a principal
+***** groups :groups:
+- Container for IAM [[*users][users]].
+- Can have [[*Policies][Policies]] attached
+- You cannot nest groups, no credentials, they only hold users and attach policies, there are a max of 300 groups allowed by default, increasable by a support ticket
+***** users :users:
+- IAM Users :: Anything requiring *long term* aws access, such as: individual person/application or service accounts
+  + If you can picture *one* thing, a *named* thing that needs access or policy, it should be a *user*
+- Can have [[*Policies][Policies]] attached
+**** Principals :principal:
+- *Principals* :: (Principal or application) makes requests to IAM to interact with a resource
+- Authentication :: Princial on proves that it *is* the identity it claims to be
+  + username and password _OR_ Access keys
+- Authenticated Identity :: a principal that proves that it is the identity it claims to be, having used Authentication
+- Policies :: Once ther is an authenticated identity it can know which [[*Policies][Policies]]  will apply
+- Diagram ::
+[[file:./images/screenshot-16.png]]
+
+
+**** IDP :idp:
+- An ID Provider (IDP) :: manages identities (create/etc)
+**** Authentication :authentication:
+- Prove who you are :: username/pass/bio
+**** Auhtorization :authorization:
+- Policies :: what you may do
+**** Identity Federation :federation:
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_172753_n0S2Ob.png]]
+**** Exam Notes :exam_tips:
+- IAM has no cost and is provided free
+- IAM is a global service, all AWS zones, and therefore has global resilience
+- IAM allows or denys identities on it's corresponding AWS Account
+- IAM has no ~direct~ control over external accounts/users
+- IAM lets the account owner make use of ~identity federation~ and ~MFA~.  [[*Identity Federation][Identity Federation]] are other external ways people authenticate
+- *IAM groups cannot be _logged_ into*
+- No *all* users group by default
+- Groups are *not* a true identity and cannot be referenced as a *principal* in a policy
+- External accounts can be used in AWS Directly : *FALSE*, Google, Facebook, etc cannot use AWS directly BUT an external account can assume an AWS role that is able to access a resource
+**** IAM Access Keys :keys:
+***** Username and Password :: Web console
+  + IAM user may only have _one_ username and _one_ password
+***** Access Keys :: APIs and console
+  + IAM Users can have up to _two_ access keys
+  + Can be created/deletes and made inactive/active
+  + Must be changed by the user
+  + Made of two parts: _access_key_id_ and _secret_access_key_
+  + Cannot be downloaded again
+  + must be deleted and then recreated
+  + Two sets for rotation of keys
+  + Root users should _not_ have access keys, instead should be IAM users
+  + Added via "My Security Credentials -> Create Access Key"
+**** Policies :policy:
+- Allow/Deny access by :: Attaching to [[*roles][roles]] , [[*groups][groups]] , or [[*users][users]] :iam:
+- definitions of access
+- Written in JSON
+***** Inline Policy
+- Json Policy Document
+- Applying a policy to each resource
+- *Primarily used for Exceptions*
+***** Managed Policy
+- Created as it's own object that is attached to policies
+- Good for: Users, Groups, Roles
+- Reusable, Low Management Overhead
+****** AWS Managed
+****** Custom Managed
+***** Resource Policy
+ - is a form of resource policy, similar to an identity policy but attached to the bucket. the advantage is cross account permissions.
+ - You can determine if a policy is resource or identity policy IF a document has a "Principal" definition. If it does, it is likely a resource policy. Alternatively, if a this field is absent, the implication is that identity the policy is applying to *is* the principal.
+ - bucket policies are a type of resource policy: [[*S3 Security][S3 Security]]
+   - there can only be _one_ policy attached to a bucket, but it can have as many statements as needed
+**** Policy Document :document:
+***** Statements :statement:
+- Permit/Grant/Deny AWS Resources
+****** Statement ID :sid:
+- optional, explains what this does, inform reader what a statement does. Best practice to always use Statement IDs
+- example:
+  - ~"Sid": "FullAccess",~
+****** Effect :effect:
+- What the statement does, allow or deny
+- Example:
+  + ~"Effect": "Allow",~
+****** Action :action:
+- What it does
+- Example:
+  + ~"Action": ["s3:*"],~
+****** Resource :resource:
+- AWS Resource, use wildcards, [[*AWS Resource Name][AWS Resource Name]] (arn)
+- Example:
+  + ~"Resource": [ "arn:aws:s3:::catgifs", "arn:aws:s3:::catgifs/*"]~
+
+****** Priority Level of Statements
+- Explicit Deny :: If something is explicitly denied, nothing can overrule it.
+- Explicit Allow :: Always takes affect *unless* there is an _explicit deny_ defined
+- Default Deny :: The default is _implicit deny_
+**** Example Document :example:exam_tip:
+#+BEGIN_SRC json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "FullAccess",
+      "Effect": "Allow",
+      "Action": ["s3:*"],
+      "Resource": [ "*"]
+    },
+    {
+      "Sid": "DenyCatBucket",
+      "Effect": "Deny",
+      "Action": ["s3:*"],
+      "Resource": [ "arn:aws:s3:::catgifs", "arn:aws:s3:::catgifs/*"]
+    },
+  ]
+}
+#+END_SRC
+- Diagram
+  [[file:./images/screenshot-12.png]]
+*** Root User :root:user:
++ Tied to email supplied upon creation
++ Full control over that account
++ Cannot be restricted
+*** AWS Organizations :organizations:
+- Management Account (Master Account) :: An AWS account creates an organization but lives outside of the account, is not WITHIN the AWS account
+- Member Accounts :: Other AWS Accounts that can be added to the organization
+- Organization Root :: is a container within an organization that can contain AWS accounts such as Member Accounts
+- Organization Units :: Units within an Organization, can contain other OUs or AWS accounts
+- Billing :: Billing is passed through _to_ the management account of the organization, or Payer Account
+  - One bill for everything in the organization
+- Role Switch ::  switch from a federated account into a different role in another AWS account that is *within* the *organization*
+    - This is setup *automatically* if you create a new account from within an existing organization
+    - when inviting an existing account this must be configured
+- *Creating Accounts*
+  - Can create accounts directly within the organization instead of the invitation process
+**** Example
+     [[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_174842_geCV5l.png]]
+**** Organziations Allow
+- Single payer and centralized cost trackign
+- Create and invite accoutns
+- Apply policy-based controls
+- simplify organization-wide management of AWS services
+**** Service Control Policies :scp:service_control_policy:
+- Policy Document that can be attached to an organization as a whole, or one or more OU, or even individual AWS Accounts
+  - These inherit down the organization tree
+- Management Account *cannot* be affected by SCP, cannot be restricted. Best practice is then to *not* use the management account, and instead different accounts created for things
+- SCP limits what the account can do, including the *root* account. SCPs are account permission boundaries. SCPs are not restricting root user, they are restricting what the actual AWS Account can do, thereby restrticing the *root* user. SCPs *do not* grant access, they only restrict / boundary
+***** Default Policy
+- automatically applied, a deny list. This is called FullAWSAccess
+- Default policy can be removed for explicit, global deny and then add Allow Policy for each
+***** Diagram :diagram:
+****** one
+
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_190406_GlxVi2.png]]
+****** two
+
+
+
+** Lambda :lambda:
+** aws-cli :cli:aws:
+- Must provide a profile with each command, or specify a default profile
+** Cloud Computing :aws:cloud:
+*** Defined by NIST :nist:
+- 5 characteristics
+**** on demand self service :self_service:
+***** can provision capabilites as needed ~without human interaction~ :exam_tip:
+**** broad network access :net_access:
+***** capabilties are available over ~network~ thru ~standard mechanisms~ :exam_tip:
+**** resource pooling :resource_pooling:
+***** there is a sense of ~location independence~ no ~control~ or ~knowledge~ over the exact ~location~ of the resources :exam_tip:
+***** resources are ~pooled~ to serve many customers using ~multi-tenant~ :exam_tip:pool:multi_tenant:
+- pooling allows for easy scaling
+**** rapid elasticity :elastic:rapid:
+***** capabilities can be ~elastically provisioned~ and released to scale ~rapidly~ outward/inward with demand :exam_tip:
+***** capabilities ~seem~ to be ~unlimited~ from a consumer perspective :exam_tip:
+**** measured service :measured_service:
+***** resource usage can be ~monitored, controlled, reported AND billed~ :exam_tip:
+***** ~on-demand billing~
+*** Multicloud :multicloud:
+- multiple public cloud environments
+- Use ~more~ than ~one~ public cloud
+**** "Singplepane" :singlepane:
+a service provider that provides access to several cloud vendors via one "pane"
+**** private cloud :private:
+Still must meet :: [[*Defined by NIST][Defined by NIST]]
+***** AWS Outposts :outposts:
+*** Hybridcloud :hybridcloud:
+- private cloud in conjunction with public cloud together
+- ~Public~ AND ~private~ cloud
+**** ~NOT~ the same as cloud and on-prem, that is a ~HYBRID ENV~ :exam_tip:
+*** private cloud
+- on premises ~real~ cloud
+*** public cloud
+- ONE public cloud
+*** Cloud Service Models :as_a_service:service:
+**** unit of consumption
+- what is consumed, what you are responsible to manage
+**** Infrastructure as a Service :iaas:
+- virtualization, servers, infrastructure and facilities are owned by vender, OS is consumed by the user
+***** examples :: EC2 :ec2:
+Elastic Compute Cubed
+**** Platform as a Service :paas:
+- virtualization, servers, infrastructure, facilities, OS and container are owned by vender, runtime is consumed by the user
+***** examples :: heroku
+**** Software as a Service :saas:
+virtualization, servers, infrastructure, facilities, OS and container, runtime and data are owned by vender, the application is consumed by the user
+***** examples :: dropbox, gmail
+**** Not Cloud
+***** On-Prem
+- everything from facilities to application
+***** DC Hosted
+- facilities are owned by vendor
+** AWS Infrastructure :aws:infrastructure:
+*** References :refernces:
+- https://www.infrastructure.aws/
+*** AWS Regions :region:
+- creation of AWS, does not technically map to a continent
+- has ALL AWS avaible: compute, storage, db, AI, analytics
+- Geographically spread
+**** Benefits of regions :exam_tip:
+- geographic separation :: isolated _fault domain_
+- geopolitical seperation :: different _governance_
+- location control :: _Performance_
+**** Naming Convention
+- REGION CODE :: Code/designation, ex: ~ap-southeast-2~
+- REGION NAME :: Real name, ex: Asia Pacific (Sydney)
+*** AWS Edge Location :edge_location:
+**** CDN-esque, far more widespread, store data closer to customers. Content Distribution Services :CDS:CDN:
+*** AWS Availability Zones :availability_zone:
+- availability zone :: zones INSIDE of a region, designated with a letter following the region code ( see [[*Naming Convention][Naming Convention]] )
+- Isolated Facilities :: in case of catastrotic failure. No visibility as to what is inside an AZ
+*** Service Resilience :resilience:
+- Globally Resilient :: Entire region can fail, service will continue
+  + Examples :: IAM, Route53
+- Region Resilient :: One set of data per region, generally replicate data to other Availability Zones, within a region
+- AZ Resilient :: Only within Availability Zones
+- Cantril AWS Global Infrastucture
+[[file:./images/screenshot-02.png]]
+*** AWS Resource Name :arn:
+- specific to every AWS resource
+  - ex: ~arn:aws:s3:::bucket-name~
+  - in this exame region and account number are excluded as [[*S3][S3]] buckets must have globally unique names
+- can use wildcards
+**** Diagram :diagram:
+[[file:./images/screenshot-17.png]]
+**** exam tips :exam_tips:
+- Maximum numbers  of IAM users per account
+   #+begin_export html
+   <details>
+   5000
+   </details>
+   #+end_export
+- Maximum number of groups an IAM user can be in
+    #+begin_export html
+    <details>
+    10
+    </details>
+    #+end_export
+- cases when NOT to use IAM
+    #+begin_export html
+    <details>
+    internet scale, larg orgs, org mergers
+    </details>
+    #+end_export
+** Virtual Private Cloud :vpc:
+- VPC :: Private networks inside AWS
+  - _one account & one region_
+- A VPC exists within a region, by default cannot cross this
+- Regionally Resilient, see [[*Service Resilience][Service Resilience]]
+- [[*Hybridcloud][Hybridcloud]] :: can be used to connect to on-prem
+- [[*Multicloud][Multicloud]] :: can be used to connect to other cloud
+- Private and Isolated by default
+*** default VPC
+- only _ONE_ per region
+**** Network
+- VPC CIDR :: Network Provisioned for that VPC
+  - everything within VPC uses this network
+  - 172.31.0.0/16
+    + Availability zones each have a subnet within this CIDR
+    + Subnets are /20 in _each AZ_ in the _region_
+  - can be removed
+- Everything provisioned will get a public IPv4 Address
+*** custom VPC
+- can have _MANY_ per region
+- private by default
+- May have custom
+*** Internet Gateway :igw:
+*** Security Group :sg:
+- can be attached to as many or few services as needed
+*** NACL :nacl:
+** Elastic Compute Cloud :ec2:
+- EC2 :: AWS implementation of [[*Infrastructure as a Service][Infrastructure as a Service]]
+  - unit of consumption is the service
+  - _private_ by default and uses [[*Virtual Private Cloud][Virtual Private Cloud]] networking
+  - AZ Resilient :: Instance fails if the AZ fails, see [[*AWS Availability Zones][AWS Availability Zones]]
+  - different sizes and capabilities
+  - on demand billing _per second_
+*** Instance Lifecycle :lifecycle:control:
+**** running
+- Instance is running consuming CPU, RAM, Net, Disk and billing continues per second
+**** pending
+- instance is created but not yet started
+**** stopped
+- no CPU, RAM, Net, billing. but instance still bills per second for disk usage
+**** terminated
+- At this point the instance is deleted / removed / unprovisioned, no resource are consumed and no billing continues.
+*** Amazon Machine Image :ami:
+- AMI :: can be created FROM an [[*Elastic Compute Cloud][Elastic Compute Cloud]] instance or an AMI may be used to create an EC2 instance
+**** permissions :permissions:
+- public :: everyone allowed
+- owner :: _implicit_ allow
+- explicit :: specific AWS accounts allowed
+**** root volume
+- boot drive
+- etc
+**** block device mapping :disk:
+- which volume is boot, data, etc
+**** AMI does NOT store
+- instance settings
+- network settings
+*** Configuring an EC2 Instance :demo:
+**** From console search EC2
+**** Create keypair
+**** Choose AMI
+**** Select an Instance type
+**** Configure Instance Details
+***** [[*Virtual Private Cloud][Virtual Private Cloud]]
+- select a VPC, default or custom
+***** Network and [[*AWS Availability Zones][AWS Availability Zones]]
+- select one or let AWS select one for you
+***** auto assign public IPv4
+- pick IP address settings.
+**** configure storage :storage:
+- root device is default
+**** add tags
+- add any tags relevant to this instance
+**** configure [[*Security Group][Security Group]]
+- works similar to a firewall
+- by default _ONLY_ provides SSH
+  - by default this gives SSH acess _publicly_
+*** exam tip :exam_tip:
+- billing _per second_
+- _private_ by default
+- Availability Zone risilience, if the AZ fails the instance will fail
+- storage used by default is local or [[*Elasitc Block Storage][Elasitc Block Storage]]
+** storage :storage:
+*** Elasitc Block Storage :ebs:
+*** S3 :s3:
+- nearly infinitely scalable object storage, accessible from anywhere ( public )
+- Good _default_ storage solution
+- _Global_ storage Platform :: _regionally_ based / resilient, see [[*Service Resilience][Service Resilience]]
+  - lives in specific region, stored here when unsed, does not leave unless configurd to
+  - can be accessed from anywhere
+  - data replicated across all [[*AWS Availability Zones][AWS Availability Zones]] in that region
+  - can tolerate failure of an AZ
+**** data storage :data:
+- great for Media: movies audio photo and large data sets
+**** access
+- UI
+- CLI
+- API
+- hTTP
+**** Objects :object:
+- data that S3 stores :: the data talked about previously, etc. Files. see [[*data storage][data storage]]
+***** Object Key
+- Works with Keys (similar to a filename)
+- this identifies an object in a bucket. [[*Object Key][Object Key]] + [[*Buckets][Buckets]] == access to this [[*Object Value][Object Value]]
+***** Object Value :exam_tip:
+- The content that is stored. _The maximum value is 5TB_
+***** Diagram
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_143121_wxGcPe.png]]
+**** Buckets :bucket:
+- Holds your objects
+- _Buckets live in a specific region_
+  - data does not leave unless configured to do so
+- _blast__radius_ is the [[*AWS Regions][AWS Regions]]
+- infintely scalable storage system
+- flat structure
+- No concept of filenames, keys only
+- Folders are _prefixes_ and part of the object name
+***** Diagram
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_145321_dAZB0t.png]]
+**** Patterns and Anti-patterns
+- Object store _not_ a file or block storage
+- S3 has _no_ filesystem
+- cannot be mounted
+- great for large scale and distribution
+- good for _offload_, get data off an expensive EC2 instance and access it FROM [[*Elastic Compute Cloud][Elastic Compute Cloud]]
+- Can take data from, or put it TO many products, S3 is a great default
+**** Configuring an S3 Bucket :demo:
+***** basics
+- select a name using naming restrictions, see [[*exam tips][exam tips]]
+- select AWS region
+***** bucket settings
+- by default public access is blocked
+  - giving public access does _not_ mean anyone can access, further configuration is required to grant access
+- only root user and anyone with access can use and see this bucket
+***** access points
+***** metrics
+***** properties
+***** Removing S3 Storage
+****** Empty the bucket
+- from S3 select the bucket, select empty, type ~permanently empty~
+****** delete the storage
+- From s3 select the bucket, click delte. type the bucket name and click delete bucket
+**** S3 Security :security:
+- Can utilize [[*Resource Policy][Resource Policy]] to allow anonymous access
+  - example:
+    #+BEGIN_SRC json
+{ "Version": "2012-10-17",
+"Statement":[
+  {
+    "Sid": "PublicRead",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": ["s3:GetObject"],
+    "Resource": ["arn:aws:s3:::someproject/*"]
+  }
+ ]
+}
+#+END_SRC
+  - bucket policy for blocking an IP:
+
+    [[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210317_112505_LmoGJY.png]]
+  - diagram of the same
+
+       [[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210317_112149_iE8xQM.png]]
+- Block Public Access
+  - another boundary in response to accidentally open policies. These apply *only* to anonymous identities, this can be used as an override or failsafe
+***** exam tips :exam_tips:
+- When to use an identity, policy, or acl
+    | Identity Policy                 | Bucket (Resource) Policy            | acl   |
+    |---------------------------------+-------------------------------------+-------|
+    | Controlling different resources | *just* controlling a resource. ex: s3 | never |
+    | Preference for *IAM*              | *anonymous* _or_ *cross account*          |       |
+    | *Same account*                    |                                     |       |
+-
+**** Pricing Structure
+- gb/month
+***** Static Site
+- allowed 5GB
+**** exam tips :exam_tips:
+- Bucket names must be _globally unique_
+- *private by default*
+  - only account root user will have access without explicit permission grant
+- names are :: between 3 and 63 characters, all lowercase, no underscores
+- must start with lowercase letter or a number
+- cannot be IP formatted
+- Limit :: _100 soft limit, 1000 hard limit_
+  - soft limit :: can be added by the user
+  - hard limit :: must contact AWS support
+  - _Important if you are trying to allocate buckets per user._
+  - Bucket _CAN_ use prefixes set for users
+- Unlimited objects, sizes between _0 bytes and 5TB_
+- _key = name, value = data_
+- S3 Storage :: is a *public* service and holds *objects*, _not_ block storage, with *unlimited* amount of data
+** Cloud Formation :cfn:cloud_formation:
+- can be used for
+  - automation
+  - change management
+  - one-off creations
+  - consistent
+  - portable
+*** Concets :concepts:
+- update, delete, create resources via templates
+- Infrastructure as code
+- written in _JSON_ or _YAML_
+- Templates create a [[*stack][stack]]
+*** Template :template:
+**** resouces :resouces:
+- this field is the _only_ mandatory field
+**** description
+- a description of the template, what it does / resources / costs / etc.
+- if a AWSTemplateFormatVersion is included, the description _MUST_ be after this
+**** metadata
+- can control UI
+**** parameters
+- prompt the user for more information
+- ex:
+  - number of AZs, names, sizes, etc
+- can provide default values or even selection box
+**** mappings
+- create lookup tables
+**** conditions
+- things that will only occur when a condition is met.
+- two setup process:
+  - conditions
+  - results (use the condition)
+**** output
+- what is presented after something is the tempate is run
+*** Diagram
+**** stack creation from template
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_161226_u24rgM.png]]
+**** stack update from template
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210301_161346_4ZxmOk.png]]
+*** stack
+- physical living resources created from a [[*Template][Template]]
+*** Configuring CFN :configure:example:
+-  Needs a template (YML or JSON)
+**** Must first create a stack
+- Prerequisites
+  - template ready
+  - sample
+  - create
+*** Session Manager :session_manager:
+- must be defined within the template to be used
+- Session manager is away of connecting to an EC2 instance without using SSH ( or RDP ? more info needed ) through the webUI
+*** exam tips :exam_tips:
+- if a AWSTemplateFormatVersion is included, the description _MUST_ be after this
+- cloudformation logical resource :: is a resource defined in a cloudformation template
+- cloudformation physical resource :: physical resource created by creating a CF stack
+** Cloud Watch :cloudwatch:
+- operational management and monitoring
+*** Collects and manages operational data
+- data about how something runs, logs, etc.
+- *public service*
+  - can be used across clouds, see [[*Multicloud][Multicloud]] or [[*Hybridcloud][Hybridcloud]], etc
+*** metrics :metrics:
+- data relating to aws products, apps, on-prem
+- disk space, number of visitors, etc.
+- interfaces:
+  - api , ui, etc
+*** Diagram :diagram:media:
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210302_132252_LpNL41.png]]
+*** Namespace
+- a container, how to keep things within a ruleset
+- All data goes into a AWS Namespace, done by default
+- contains [[*metrics][metrics]]
+*** Datapoint
+- measurepoints of metrics
+- consists of:
+  - timestamp
+  - value
+*** Dimensions
+- name value pairs sent in with data points to a CloudWatch namespace for a metric. An example is:
+  - Name=InstanceID, Value=i-xxxxxx
+*** Alarms
+- Linked to a metric to take an action based on a Metric with two states, OK and ALARM, or INSUFFICIENT DATA ( still gathering )
+- OK :: Everything is good or as expected
+- ALARM :: An Alarm event is triggered when something is NOT correct
+  - SNS :: Send a notification
+  - Action :: Excecute something to correct the alarm condition
+*** Configuration
+*** Logs :logs:
+- integrates with
+  - ec2, vpc, lambda, cloudtrail, r53, etc
+- Store, monitor and access logging data
+- Public service, useable from AWS or on-prem
+- Able to generate metrics based on logs via *metric filter* which you can then set up alarms, etc, based on metrics
+- Stored into log streams, each log stream is an instance of one log for one instance.
+  - Example: ~/var/log/messages~ for an *EC2* instance is one log stream
+- Log groups can contain many log streams
+  - Example: ~/var/log/messages~ across several *EC2* instances
+**** Diagram :diagram:
+[[/Users/edward/Nextcloud/org/AWS/cantril/aws-general.org_20210315_195108_zKfDyG.png]]
+** Cloud Trail :cloudtrail:
+- CloudTrail Event :: Actions in AWS are logged in CloudTrail via API calls. these actions can be from services, users, etc.Cloudtrail are regional services, but you can set a trail to *"One Region"* or *"All Regions"*. The bonus to all regions are if AWS adds new regions, they are automatically included. Global Service events go to US East 1.
+  - default 90 days event history, but can be stored in an [[*S3][S3]] bucket which can be stored indefintely. Stored as compressed on JSON
+  - free by default
+  - stored and can be viewed in JSON
+  - This data can be stored into [[*Cloud Watch][Cloud Watch]] for easier viewing/useage
+  - Events are either: *management events* or *data events*
+    - management events: creating ec2, etc
+    - data events: actions to s3 objects, etc. *not* enabled by default
+- Organizational Trails :: MUST be set up from the Organization management account.
+- Individual Trails :: can be setup by individual accounts
+*** CloudTrail Creation
+ - When creating a trail thereis an option that must be ticked to enable for all accounts within the [[*AWS Organizations][AWS Organizations]]. SNS can also be configured during trail creation
+ - [[*Cloud Watch][Cloud Watch]] can also be configured during setup.
+   - can perform searches, history, event history processes, etc. Further log functionality.
+   - events can cause other things to happen.
+ - A role will have to be created for CloudTrail to interact with other services
+   - doing so creates a policy document to alloud cloudtrail to interact with cloudwatch logs
+*** Pricing
+- 90 Day history is free by default
+- 1 copy (Trail) of management events free in every region, in each account, is free.
+  - additional copies (trails) of management events are 2.00 per 100,00 events.
+  - data events are 0.10 per 100,000 events, irrespective of how many trails you have, anytime data trails are enabled
+*** exam tips :exam_tips:
+- enabled by default for *90* days, no *s3*
+- *trails* are how you configure for *s3* and *cloudwatch* logs
+- *management* events *only* be default, *not* data. *data* must be enabled individually
+- *global service events* log to US EAST 1, trail *must* be enabled to capture, these are *IAM, STS, CloudFront*
+- cloudtrail is *not* realtime, thereis a delay of around 15 minutes
+
+** Site Format Example ( for reference )
++ Broad / general tips and info about the heading
+*** References
+- URLS go here that relate to the top heading
+*** Sample: Idea / Subcategory
+- item :: definition ~related code~ _important keyword_
+*** Tags Used:
+- exam_tip :: when something is highlighted or designated as a tip
+- reference ::
+** Shared Responsibility Model
+*** Security
+- AWS Responsibility :: for the cloud
+  + client side encryption, auth, server-side encryption, net traffic
+  + OS, local FW
+  + Application identity and access mgmt
+  + *CUSTOMER DATA* : secured, backed up, etc
+- Customer Responsibility ::  security in the cloud
+  + hardware, global infra
+  + computer, storage, db, net, AZ, edge, regions
+  + software which provides the above
+
+*** Diagram :diagram:
+
+[[file:./images/screenshot-05.png]]
+** High Availability, Fault Taulerance, Disaster Recovery :ha:fault_tolerance:dr:
+- High Availability :: aims to ensure agreed level of Ops performance (uptime, etc) for a higher than normal period
+  + online as often as possible
+  + usually measured as a percentage of uptime
+  + 99.9% is referred to as (three 9s), 8.77 hours downtime per year
+  + About minimixing outage, maximixing uptime. HA is *not* losing sesseion, etc
+- Fault Tolerance :: much more than HA, something that enables a system to continue operating _properly_ in event of failure of some (at last one) of it's components *no customer impact*
+  + when HA is _not_ enough
+  + example would be an active - active solution
+  + routing sessions *around* a failure in one system
+  + example : an airplane with duplicate, 2x more engines than needed
+- Disaster Recovery :: set of policies, tools, procedures to enable recovery in a disaster situation
+  + pre planning :: plan FOR a disaster
+  + DR Process :: plan during an disaster
+  + copies of process _AND_ data
+*** Summary :exam_tip:
+- HA :: Minimize any outages
+- Fault Tolerance ::  operate THROUGH a fault
+- Disaster Recover :: how to recover when HA and FT fails
+** DNS :dns:
+- DNS :: is a _discovery service_, translating machine into human and human into machine. IPs to Names and Names to IPs
+*** zone
+- stored in zone files, served by NameServers
+  + zone files hold DNS records
+*** resolver
+- finds a nameserver
+- root hints ::  pointer to the DNS root server
+  + ISP or Router can hold this
+*** terms
+- dns client :: what device wants an address of a server
+  + examples :: laptop, phone, pc, IOT, etc
+- resolver- :: software on device or server which makes DNS queries for client on it's behalf
+- Zone :: part of the DNS database database
+  + examples :: amazon.com
+- ZoneFile :: what the data is
+  + examples :: records
+- Nameserver :: where zonefiles are hosted
+*** authorization
+- *trusted*
+  + trust is passed, ex: .com root zone can trust amazon.com
+*** TLD
+- top level domains ::  live in root zones
+*** process of DNS
+1. configured resolver must:
+   a. DNS Client asks a resolver for the IP of a given DNS Name
+   b. DNS resolver communicates with one or more root server to acces the root zone, using root hints file, to begin finding the IP address.
+      - This is managed by IANA :: IANA controls the root zone
+      - Trust/Authoritative :: where trust lies between client and server. client can trust root by default, which trusts it's ( ?branches? name for this? )
+2. find nameserver which hosts a zonefile
+3. query that nameserver for a record inside that zonefile
+4. pass this information back to the dns client
+*** process attempt 2
+1. Client needs an IP from a Name, say www.amazon.com.
+2. Client uses resolver in ISP.
+3. Resolver uses root hints file to communicate with  DNS root server and asks for www.amazon.com
+4. Root server nameservers does _NOT_ have www.amazon.com, but they do know who has .com. servers and passes authorization here
+5. resolver talks to nameservers at .com., asks for www.amazon.com. Only authoritative for .com., does _NOT_ have www.amazon.com. but _does_ have amazon.com. because it was delegated that right when domain was registered, returns nameservers for amazon.com.
+6. resolver talks to amazon.com. nameservers, requests for www.amazon.com.
+*** IANA
+- does not own data, but knows *WHERE* to delegate to
+*** distributed
+- zone files stored on nameservers globally
+**** DNS Root
+- Domain Name :: Domains are read right to left, seperated by a period
+  + example :: www.amazon.com*.*
+**** root servers
+- 13 servers with databases ran by 12 different large global companies
+- they only manage the servers, not the database
+*** DNS Records :dns_records:
+**** NS Records :ns:
+- .com. :: managed by verisign
+  + holds many NS records for amazon.com
+    - point to servers managed by amazon.com team, where amazon.com zone lives
+- amazon.com :: manages all *.amazon.com records
+**** Record Types
+- A and AAAA Record :: hostnames mapping to IP
+  + A record ::   ipv4
+  + AAAA :: ipv6
+- Cname ::  canonical, host to host records
+- MX :: Mail
+  + priority ::
+  + value :: can be a host
+    - ex :: mail (mail.google.com) or mail.other. <-- FQDN
+  + Diagram
+    [[file:./images/screenshot-10.png]]
+- TXT :: Abritrary records for extended functionality
+  + often used to verify ownership
+*** TTL :ttl:
+- ttl :: numeric value set in seconds
+- how long to hold or cache a record, how long a resolver should hold a record
+- often a cause of failure in projects, if an upcoming change or project is happening that includes DNS changes, lower TTL days or more in advance
+**** diagram :diagram:
+[[file:./images/screenshot-11.png]]
+*** diagrams :diagram:
+**** Heirarchy
+[[file:./images/screenshot-07.png]]
+**** Resolution
+[[file:./images/screenshot-08.png]]
+*** exam tips :exam_tips:
+- config that points at the root servers IP and address:
+  #+begin_export html
+  <details>
+  root hints
+  </details>
+  #+end_export
+- Hosts the DNS root zone:
+  #+begin_export html
+  <details>
+  root servers
+  </details>
+  #+end_export
+- points at TLD authoritative servers
+  #+begin_export html
+  <details>
+ root zone
+  </details>
+  #+end_export
+- gTLD : Generic Toplevel domain
+- ccTLD : country-code top level domain
+- Number of DNS Root Servers
+  #+begin_export html
+  <details>
+  13
+  </details>
+  #+end_export
+- Number of organizations that manager the DNS Root Servers
+  #+begin_export html
+  <details>
+  12
+  </details>
+  #+end_export
+- DNS Root Zone is managed by
+  #+begin_export html
+  <details>
+  IANA
+  </details>
+  #+end_export
+- The record type that is how a root zone delegates control of org to the org registry
+  #+begin_export html
+  <details>
+  NS
+  </details>
+  #+end_export
+- Org that maintains zones for a TLD
+   #+begin_export html
+  <details>
+  registry
+  </details>
+#+end_export
+- Org that has relationships with the .org TLD zone mgr allowing TLD registration
+  #+begin_export html
+  <details>
+  Registrar
+  </details>
+  #+end_export
+- Number of subnets in a default VPC
+   #+begin_export html
+  <details>
+  equal to the number of AZs in the region the VPC is located
+  </details>
+  #+end_export
+- IP CIDR of a default VPC
+  #+begin_export html
+  <details>
+  172.31.0.0/16
+  </details>
+  #+end_export
+** route 53 :route53:
+- route 53 :: global service, single database
+  + similar to IAM?
+  + globally resilient
+*** domain registry
+- registries :: has relationship with main registries
+  + examples :: .com, .io, .net
+- how R53 works for registration
+  + check with TLD for domain
+  + creates a zonefile for the new domain, called a _hosted zone_
+  + puts this file on four managed nameservers
+  + communicates with .org registry -> PIR and adds these NS records for the .ORG TLD using Name server records
+*** Hosted Zones :hosted_zones:
+- hosted zones :: DNS as a service, create and manage zone files _( hosted zones )_
+- hosted zones :: can be
+  + public :: internet
+  + private :: linked to VPC
+*** Diagram
+**** Registration
+[[file:./images/screenshot-09.png]]
+*** host zone files on nameservers
+** [6/22] study
+*** DONE intro
+*** DONE course fundamentals and aws accounts
+*** DONE cloud computing fundamentals
+*** DONE tech fundamentals
+*** DONE aws fundamentals
+*** DONE iam, accounts and aws orgs
+*** TODO s3
+*** TODO vpc
+*** TODO ec2
+*** TODO containers and ec2
+*** TODO advanced ec2
+*** TODO r53
+*** TODO rds
+*** TODO net storage
+*** TODO HA and scaling
+*** TODO serverless and application services
+*** TODO global content delivery and optimization
+*** TODO advanced vpc net
+*** TODO hybrid environments and migration
+*** TODO security deployment ops
+*** TODO nosql db and dynamo db
+*** TODO exam
